@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 164437c82c0c88a4ab4bf268cb917193, type: 3}
+  m_Name: LckSettings
+  m_EditorClassIdentifier: 
+  TrackingId: 2f2e0292-d0c5-415c-a2b7-1b54bced4c9c
+  GameName: Martani Runners
+  RecordingFilenamePrefix: Martani VId
+  RecordingAlbumName: Martani Vids
+  RecordingDateSuffixFormat: yyyy-MM-dd_HH-mm-ss
+  AddPermissionsToAndroidManifest: 1
+  EnableStencilSupport: 1
+  BaseLogLevel: 1
+  MicrophoneLogLevel: 1
+  NativeLogLevel: 2
+  ShowOpenGLMessages: 0
+  GameAudioSyncTimeOffsetInMS: 250
+  AudioLimiter: 0
+  FallbackSampleRate: 44100
+  ImageCaptureFileFormat: 3
+  AllowLocationTelemetry: 1
+  AllowDeviceTelemetry: 1
+  TriggerEnterTag: HandTag

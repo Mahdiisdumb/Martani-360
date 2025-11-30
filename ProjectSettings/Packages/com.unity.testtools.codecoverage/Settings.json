@@ -1,0 +1,21 @@
+{
+    "m_Dictionary": {
+        "m_DictionaryValues": [
+            {
+                "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                "key": "IncludeAssemblies",
+                "value": "{\"m_Value\":\"Assembly-CSharp,Assembly-CSharp-Editor,Assembly-CSharp-firstpass,MicAmplifierEditor.Editor,PhotonChat,PhotonRealtime,PhotonUnityNetworking,PhotonUnityNetworking.Demos,PhotonUnityNetworking.Editor,PhotonUnityNetworking.Utilities,PhotonUnityNetworking.Utilities.Culling.Editor,PhotonUnityNetworking.Utilities.PhotonPlayer.Editor,PhotonVoice,PhotonVoice.API,PhotonVoice.Editor,PhotonVoice.PUN,PhotonVoice.PUN.Editor,PhotonVoice.Utilities.Editor,PunDemos.DemoHubEditor,PunDemos.DemoSlotcarEditor,Unity.XR.Content.Interaction,Unity.XR.Content.Interaction.Analytics,Unity.XR.Interaction.Toolkit.Samples.DeviceSimulator,Unity.XR.Interaction.Toolkit.Samples.StarterAssets,Unity.XR.Interaction.Toolkit.Samples.StarterAssets.Editor,Voice.FMOD.Editor\"}"
+            },
+            {
+                "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                "key": "Path",
+                "value": "{\"m_Value\":\"{ProjectPath}\"}"
+            },
+            {
+                "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                "key": "HistoryPath",
+                "value": "{\"m_Value\":\"{ProjectPath}\"}"
+            }
+        ]
+    }
+}

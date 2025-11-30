@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Onload.unity
+    guid: c41f3cec08a2b2149b717dab6da34c79
+  - enabled: 1
+    path: Assets/Scenes/Gorilla Tag.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Echo Combat.unity
+    guid: 348b68a2b729af74a82237464c1e89d7
+  - enabled: 1
+    path: Assets/Scenes/Forsaken.unity
+    guid: 5b03a6f1fb1f86a4f940104d89e71a11
+  - enabled: 1
+    path: Assets/Scenes/Tag.unity
+    guid: 4237984d1e1cdee4ab66f4bd044c90df
+  - enabled: 1
+    path: Assets/Scenes/Echo.unity
+    guid: d04d40318ceeea64cb8b55110f08292a
+  - enabled: 1
+    path: Assets/Scenes/Ruant.unity
+    guid: 6c2ef1e0b61ecde44b3bc4a5387beb00
+  - enabled: 1
+    path: Assets/Scenes/TBC.unity
+    guid: b0a24d93fbba24b49bcc8cf3cacc129a
+  - enabled: 1
+    path: Assets/Scenes/RTC.unity
+    guid: dd85442b7d3a3f047ad9a1e3df419bcf
+  m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: e6c42826aea30fc4aa6b32c7235d35f1, type: 2}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 289c1b55c9541489481df5cc06664110, type: 3}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: fba6072275013e6448e381f83d131b7f, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 524611861eee4294f9e8c57832130b27, type: 2}
+  m_UseUCBPForAssetBundles: 0
