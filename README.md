@@ -1,2 +1,22 @@
 # Martani 360
-well this is codename 360 my vr game a gorilla tag  fangame but its not fully a gtag fangame after all im not a script kidde i have also an echo vr like map i call hitball and it uses echo vr movement i made my self and there is a forsaken but gorilla tag were everyone is survivor while ai chase you i have also horror and a combat system
+
+**Codename: 360**  
+A VR game project inspired by Gorilla Tag *but not a Gorilla Tag clone*.
+
+This is an experimental VR game built in Unity with multiple gameplay systems:
+- Gorilla Tag–style locomotion
+- An Echo VR–like arena map called **Hitball**
+- AI that chases players
+- Horror elements
+- A basic combat system
+
+## What This Is
+
+This is **not a finished product**. It’s a work‑in‑progress VR game prototype mixing mechanics from multiple inspirations:
+
+- fast movement gameplay like Gorilla Tag  
+- VR throwing / ball game vibes like Echo VR  
+- horror chase sequences  
+- basic combat interactions  
+
+It’s meant to be a **fun sandbox project**, not a commercial release.
