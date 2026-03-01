@@ -1,7 +1,14 @@
 fileFormatVersion: 2
-guid: 4848c06a9b5718946b4968fc2697e9a4
+guid: e5c3dda6f11fe7845989297c8a603dc2
 TextScriptImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonChat/Code/changes-chat.txt
+  uploadId: 776507

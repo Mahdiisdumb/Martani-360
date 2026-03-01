@@ -1,8 +1,17 @@
 fileFormatVersion: 2
-guid: 00833744be409cc4ba7d440dd0be1489
+guid: 8446cb282e1f9f344b56bd75db83f0be
+timeCreated: 1446052884
+licenseType: Store
 NativeFormatImporter:
-  externalObjects: {}
-  mainObjectFileID: 0
+  mainObjectFileID: -1
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 130518
+  packageName: Photon Voice 2
+  packageVersion: 2.59
+  assetPath: Assets/Photon/PhotonVoice/Demos/DemoVoicePun/Stylized city/Materials/24
+    - Default.mat
+  uploadId: 756092

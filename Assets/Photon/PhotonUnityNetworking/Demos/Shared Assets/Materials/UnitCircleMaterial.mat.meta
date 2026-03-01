@@ -1,8 +1,11 @@
 fileFormatVersion: 2
-guid: ce4cbfcd9f4e08448b64c1c35f0ff5fd
+guid: fb6c12085a6b0a5429029fcd6478a816
 NativeFormatImporter:
-  externalObjects: {}
-  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/Shared Assets/Materials/UnitCircleMaterial.mat
+  uploadId: 776507

@@ -1,7 +1,15 @@
 fileFormatVersion: 2
-guid: f8aa54e4b7c8af6489c882e4b7655d4a
+guid: 792c3af1ae888aa4396277e98fc6b996
+timeCreated: 1446465710
+licenseType: Store
 DefaultImporter:
-  externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 130518
+  packageName: Photon Voice 2
+  packageVersion: 2.59
+  assetPath: Assets/Photon/PhotonVoice/PhotonVoiceLibs/opus-COPYING
+  uploadId: 756092

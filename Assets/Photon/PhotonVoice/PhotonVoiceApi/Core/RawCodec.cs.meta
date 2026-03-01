@@ -1,2 +1,18 @@
 fileFormatVersion: 2
-guid: eecdd3158229518479789e1544b86b39
+guid: 9516187db373c5147a69fc975b62bfc0
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 130518
+  packageName: Photon Voice 2
+  packageVersion: 2.59
+  assetPath: Assets/Photon/PhotonVoice/PhotonVoiceApi/Core/RawCodec.cs
+  uploadId: 756092

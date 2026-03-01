@@ -1,7 +1,12 @@
 fileFormatVersion: 2
-guid: 1d9933f517b9dc6489d5a7fd17a0a207
+guid: e7a7f9734636d415ca84ef3aaf7680f6
 DefaultImporter:
-  externalObjects: {}
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/PunBasics-Tutorial/Scenes/PunBasics-Room
+    for 4.unity
+  uploadId: 776507

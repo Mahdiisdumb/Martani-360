@@ -1,7 +1,12 @@
 fileFormatVersion: 2
-guid: 25f06e0372ed4e049816cd808700ab87
-PrefabImporter:
-  externalObjects: {}
+guid: 82b2227f60269dd46b9a921faca9dc1f
+NativeFormatImporter:
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/Shared Assets/Prefabs/UI/Toggle
+    Regular.prefab
+  uploadId: 776507

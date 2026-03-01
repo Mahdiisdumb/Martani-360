@@ -1,8 +1,15 @@
 fileFormatVersion: 2
-guid: 369759a46ad67a64da59ba2c685ba5c5
+guid: 90623549d4482f042ade35d8a0758e35
+timeCreated: 1524052433
+licenseType: Store
 NativeFormatImporter:
-  externalObjects: {}
-  mainObjectFileID: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/DemoProcedural/Materials/Yellow.mat
+  uploadId: 776507

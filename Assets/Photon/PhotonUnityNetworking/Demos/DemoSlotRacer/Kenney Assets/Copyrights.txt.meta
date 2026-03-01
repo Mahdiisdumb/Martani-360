@@ -1,7 +1,15 @@
 fileFormatVersion: 2
-guid: 3c827c53ffc2cce4da1639116cc9847f
+guid: 386ff113c810b4ecfb823874aeb6fb97
+timeCreated: 1529322828
+licenseType: Store
 TextScriptImporter:
-  externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/DemoSlotRacer/Kenney Assets/Copyrights.txt
+  uploadId: 776507

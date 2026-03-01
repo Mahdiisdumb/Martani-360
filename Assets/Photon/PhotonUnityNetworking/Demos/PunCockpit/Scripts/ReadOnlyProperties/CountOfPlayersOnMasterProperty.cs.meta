@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: 0385f2e24ca9c4c40bf2c6dfd812e537
+guid: c8567842684394fb7a291f803abfb20e
+timeCreated: 1524140344
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/PunCockpit/Scripts/ReadOnlyProperties/CountOfPlayersOnMasterProperty.cs
+  uploadId: 776507

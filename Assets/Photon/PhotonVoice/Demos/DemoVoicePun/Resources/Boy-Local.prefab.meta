@@ -1,7 +1,11 @@
 fileFormatVersion: 2
-guid: 03089821aa57f8f48873d4503542e757
-PrefabImporter:
-  externalObjects: {}
+guid: 918176382df6c6644be68959372cc869
+NativeFormatImporter:
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 130518
+  packageName: Photon Voice 2
+  packageVersion: 2.59
+  assetPath: Assets/Photon/PhotonVoice/Demos/DemoVoicePun/Resources/Boy-Local.prefab
+  uploadId: 756092

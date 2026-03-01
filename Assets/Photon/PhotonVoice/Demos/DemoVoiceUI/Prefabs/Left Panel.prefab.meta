@@ -1,7 +1,15 @@
 fileFormatVersion: 2
-guid: b29a9f56dd5bda74b9a7a93b2911d0b5
-PrefabImporter:
+guid: c3d3f87b92075324cb460d8aea990056
+NativeFormatImporter:
   externalObjects: {}
+  mainObjectFileID: 100100000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 130518
+  packageName: Photon Voice 2
+  packageVersion: 2.59
+  assetPath: Assets/Photon/PhotonVoice/Demos/DemoVoiceUI/Prefabs/Left Panel.prefab
+  uploadId: 756092

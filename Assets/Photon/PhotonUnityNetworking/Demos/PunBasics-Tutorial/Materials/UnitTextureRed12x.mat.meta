@@ -1,8 +1,11 @@
 fileFormatVersion: 2
-guid: ca783fc7b78aba7418a72194bc12a89d
+guid: 3f171282ef46c4fbea54d9ab581fcb83
 NativeFormatImporter:
-  externalObjects: {}
-  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/PunBasics-Tutorial/Materials/UnitTextureRed12x.mat
+  uploadId: 776507

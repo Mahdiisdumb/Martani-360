@@ -1,21 +1,27 @@
 fileFormatVersion: 2
-guid: 34512eea70469bd499cac23b417574bc
+guid: 4a4df204c321f9c40b0dbfb1baaffb4c
+timeCreated: 1533028308
+licenseType: Store
 TrueTypeFontImporter:
-  externalObjects: {}
-  serializedVersion: 4
+  serializedVersion: 3
   fontSize: 16
   forceTextureCase: -2
-  characterSpacing: 0
-  characterPadding: 1
+  characterSpacing: 1
+  characterPadding: 0
   includeFontData: 1
-  fontNames:
-  - Jura
-  fallbackFontReferences: []
+  fontNames: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: e00995507c2406448b4c8429136104dd, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
-  useLegacyBoundsCalculation: 0
-  shouldRoundAdvanceValue: 1
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonRealtime/Demos/DemoLoadBalancing/Jura-Medium-LB.ttf
+  uploadId: 776507

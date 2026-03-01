@@ -1,2 +1,14 @@
 fileFormatVersion: 2
-guid: 2a8a29c09be05c643a1f0b5d65a6faba
+guid: d93148764d7961d4a8b8112bd166cf35
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonRealtime/Code/PhotonPingClasses.cs
+  uploadId: 776507

@@ -1,7 +1,15 @@
 fileFormatVersion: 2
-guid: 2a63c57448966b943a8caa3c4d51116b
-AssemblyDefinitionImporter:
-  externalObjects: {}
+guid: a738238285a7a8246af046cbf977522f
+timeCreated: 1537459565
+licenseType: Store
+DefaultImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/UtilityScripts/PhotonUnityNetworking.Utilities.asmdef
+  uploadId: 776507

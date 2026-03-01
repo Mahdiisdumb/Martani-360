@@ -1,7 +1,13 @@
 fileFormatVersion: 2
-guid: 42436d28b35410d4e917b57da3026e22
+guid: 530dcba8d8fbbc24a8894ca925cadd8a
 TextScriptImporter:
-  externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonRealtime/Code/changes-realtime.txt
+  uploadId: 776507

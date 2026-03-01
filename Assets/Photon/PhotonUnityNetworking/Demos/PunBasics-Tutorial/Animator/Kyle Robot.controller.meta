@@ -1,8 +1,12 @@
 fileFormatVersion: 2
-guid: cde934b34423f4549999b1d90aa4eeae
+guid: 1b222757b9e3844209748206173481c3
 NativeFormatImporter:
-  externalObjects: {}
-  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/PunBasics-Tutorial/Animator/Kyle
+    Robot.controller
+  uploadId: 776507

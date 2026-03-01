@@ -1,2 +1,20 @@
 fileFormatVersion: 2
-guid: ac5dd7b1c5b710d4fa19e7cd1a5c842d
+guid: 44aff3084c8664497aa6048e66e71a7c
+timeCreated: 1519126771
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/PunCockpit/Scripts/Autonomous
+    UI/BackgroundTimeOutField.cs
+  uploadId: 776507

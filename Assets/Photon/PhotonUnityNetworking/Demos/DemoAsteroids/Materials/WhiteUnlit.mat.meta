@@ -1,8 +1,15 @@
 fileFormatVersion: 2
-guid: 93ef7fd76e5e024418c224fd00e66fae
+guid: 073b1ee561def20429e655b5c8893ad4
+timeCreated: 1505213348
+licenseType: Store
 NativeFormatImporter:
-  externalObjects: {}
-  mainObjectFileID: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/DemoAsteroids/Materials/WhiteUnlit.mat
+  uploadId: 776507

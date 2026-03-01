@@ -1,7 +1,11 @@
 fileFormatVersion: 2
-guid: 9ee5608ad3d06ad4ab294476024662ee
-PrefabImporter:
-  externalObjects: {}
+guid: 9c6977a9ecda14e4e96ea3a71c749c2c
+NativeFormatImporter:
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/Shared Assets/Prefabs/PointerPrefab.prefab
+  uploadId: 776507

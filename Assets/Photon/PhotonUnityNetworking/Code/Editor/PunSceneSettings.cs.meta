@@ -1,2 +1,14 @@
 fileFormatVersion: 2
-guid: 2a4c7223ebe9b014d8f9074861a9463d
+guid: fc3284eace5a64d4bb516df7d7effdb9
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Code/Editor/PunSceneSettings.cs
+  uploadId: 776507

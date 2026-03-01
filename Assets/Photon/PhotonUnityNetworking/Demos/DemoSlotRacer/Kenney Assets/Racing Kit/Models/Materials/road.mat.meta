@@ -1,8 +1,17 @@
 fileFormatVersion: 2
-guid: 687d78af3d4f0e641b243a9fce3ebd5c
+guid: 4b56a40ac6992974b8aac0882a4c7555
+timeCreated: 1495795922
+licenseType: Store
 NativeFormatImporter:
-  externalObjects: {}
-  mainObjectFileID: 0
+  mainObjectFileID: 2100000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/DemoSlotRacer/Kenney Assets/Racing
+    Kit/Models/Materials/road.mat
+  uploadId: 776507

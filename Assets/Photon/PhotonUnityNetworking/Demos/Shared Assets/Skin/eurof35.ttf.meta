@@ -1,21 +1,20 @@
 fileFormatVersion: 2
-guid: 5952d83fc5921e947aa0f4a884604656
+guid: 954746d370bc8934299c8c8267543f4f
 TrueTypeFontImporter:
-  externalObjects: {}
-  serializedVersion: 4
+  serializedVersion: 2
   fontSize: 16
+  fontColor: {r: 1, g: 1, b: 1, a: 1}
   forceTextureCase: -2
-  characterSpacing: 0
-  characterPadding: 1
+  renderMode: 0
+  style: 0
   includeFontData: 1
-  fontNames:
-  - eurofurence light
-  fallbackFontReferences: []
+  use2xBehaviour: 0
+  fontNames: []
   customCharacters: 
-  fontRenderingMode: 0
-  ascentCalculationMode: 1
-  useLegacyBoundsCalculation: 0
-  shouldRoundAdvanceValue: 1
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/Shared Assets/Skin/eurof35.ttf
+  uploadId: 776507

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4092889b083947841b1ec1901e7b86ac
+guid: 4345225956e176043b2f73b9ee1b0f2b
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,9 +8,11 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
+  fontName: eurofurence light
   fontNames:
   - eurofurence light
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 954746d370bc8934299c8c8267543f4f, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
@@ -19,3 +21,10 @@ TrueTypeFontImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonChat/Demos/DemoChat/Files/eurof35.ttf
+  uploadId: 776507

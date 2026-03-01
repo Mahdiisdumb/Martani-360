@@ -1,7 +1,15 @@
 fileFormatVersion: 2
-guid: 9bfbbb90097b3d2479ea0ff7ae4cbfe7
+guid: 6923098d409554f57bedd5a4fa66e3ad
+timeCreated: 1527163075
+licenseType: Store
 DefaultImporter:
-  externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonNetworking-Documentation.chm
+  uploadId: 776507

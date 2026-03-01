@@ -1,7 +1,15 @@
 fileFormatVersion: 2
-guid: 891c3b46f58f3c54bae07c1b40cb8f43
-PrefabImporter:
-  externalObjects: {}
+guid: 18a79aea49b60d342b7a672b7a34edbe
+timeCreated: 1505221248
+licenseType: Store
+NativeFormatImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/DemoAsteroids/Resources/SmallAsteroid.prefab
+  uploadId: 776507

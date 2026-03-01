@@ -1,7 +1,13 @@
 fileFormatVersion: 2
-guid: b2d0ee3ba5a3bb74daa947d44bd6dd7f
+guid: ec07267f6a28fb044ac89845274e79af
 DefaultImporter:
-  externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonChat/Demos/DemoChat/DemoChat-Scene.unity
+  uploadId: 776507

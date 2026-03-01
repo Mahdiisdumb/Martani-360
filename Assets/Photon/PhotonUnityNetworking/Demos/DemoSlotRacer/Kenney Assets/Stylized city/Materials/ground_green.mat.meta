@@ -1,8 +1,16 @@
 fileFormatVersion: 2
-guid: b50bd4c798fb8ac439f25cb67014a33c
+guid: fef45cc204351a9458f02ad7c0243f18
+timeCreated: 1447099478
+licenseType: Store
 NativeFormatImporter:
-  externalObjects: {}
-  mainObjectFileID: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/DemoSlotRacer/Kenney Assets/Stylized
+    city/Materials/ground_green.mat
+  uploadId: 776507

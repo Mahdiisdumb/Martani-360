@@ -1,7 +1,12 @@
 fileFormatVersion: 2
-guid: bbaf421227faedc43948e8f07669ddf4
+guid: a3b997593a4f12c4c991490593f3b513
 TextScriptImporter:
-  externalObjects: {}
   userData: 
   assetBundleName: 
-  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 130518
+  packageName: Photon Voice 2
+  packageVersion: 2.59
+  assetPath: Assets/Photon/PhotonVoice/Demos/DemoVoicePun/Standard Assets/CrossPlatformInput/CrossPlatformInputGuidelines.txt
+  uploadId: 756092

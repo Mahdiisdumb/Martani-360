@@ -1,7 +1,11 @@
 fileFormatVersion: 2
-guid: 5dbbe79cc2b2b8e4982f8cc9c1f45cf5
+guid: bff77b01b50254edbb6edeeaba5ae8b3
 DefaultImporter:
-  externalObjects: {}
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/PunBasics-Tutorial/Scenes/PunBasics-Launcher.unity
+  uploadId: 776507

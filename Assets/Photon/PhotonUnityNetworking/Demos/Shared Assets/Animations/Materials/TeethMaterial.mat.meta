@@ -1,8 +1,11 @@
 fileFormatVersion: 2
-guid: cf3f28677d5829a438f9a52028b0fddc
+guid: 17dd34e8a826d0641a0e0f43da1e03a0
 NativeFormatImporter:
-  externalObjects: {}
-  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/Shared Assets/Animations/Materials/TeethMaterial.mat
+  uploadId: 776507

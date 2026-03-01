@@ -1,2 +1,18 @@
 fileFormatVersion: 2
-guid: fff357344d77a7641a38d3c043f54b01
+guid: d4ec039454ee9b646ade0abcee9623b2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 130518
+  packageName: Photon Voice 2
+  packageVersion: 2.59
+  assetPath: Assets/Photon/PhotonVoice/PhotonVoiceApi/Core/AudioUtil.cs
+  uploadId: 756092

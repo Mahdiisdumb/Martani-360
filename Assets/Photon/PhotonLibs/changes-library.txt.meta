@@ -1,7 +1,13 @@
 fileFormatVersion: 2
-guid: 7e43cb37cb3519445823409e8e69fa63
-TextScriptImporter:
-  externalObjects: {}
+guid: d8040d310df77714a90a561261bfb2cb
+DefaultImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonLibs/changes-library.txt
+  uploadId: 776507

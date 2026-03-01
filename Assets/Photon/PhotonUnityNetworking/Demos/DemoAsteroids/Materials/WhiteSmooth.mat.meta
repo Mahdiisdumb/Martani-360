@@ -1,8 +1,15 @@
 fileFormatVersion: 2
-guid: cfacdbc3f8692b345ac335be2bcfa423
+guid: b05171e12835ff84fb155f51d69d7c31
+timeCreated: 1505213348
+licenseType: Store
 NativeFormatImporter:
-  externalObjects: {}
-  mainObjectFileID: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/DemoAsteroids/Materials/WhiteSmooth.mat
+  uploadId: 776507

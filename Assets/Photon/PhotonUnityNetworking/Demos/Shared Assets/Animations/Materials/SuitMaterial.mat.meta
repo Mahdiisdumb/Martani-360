@@ -1,8 +1,11 @@
 fileFormatVersion: 2
-guid: dff18e790d2409e4c8240c79c83179d9
+guid: ed4e4079e2e99084d8d914283565fc5c
 NativeFormatImporter:
-  externalObjects: {}
-  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/Shared Assets/Animations/Materials/SuitMaterial.mat
+  uploadId: 776507

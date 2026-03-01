@@ -1,2 +1,17 @@
 fileFormatVersion: 2
-guid: a8f86fd5e72b7fc4ea5042e7b0e0bfa7
+guid: 541a76f9c03874323b5154b14ac00427
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/DemoSlotRacer/Scripts/BezierCurve/SplineWalker.cs
+  uploadId: 776507

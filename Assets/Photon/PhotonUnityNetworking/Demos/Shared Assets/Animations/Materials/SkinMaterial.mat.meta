@@ -1,8 +1,11 @@
 fileFormatVersion: 2
-guid: 7628b62fdf0ae034ca42fd807b32dbb7
+guid: 37d0d4d178b5dbf449ff0814718dc354
 NativeFormatImporter:
-  externalObjects: {}
-  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/Shared Assets/Animations/Materials/SkinMaterial.mat
+  uploadId: 776507

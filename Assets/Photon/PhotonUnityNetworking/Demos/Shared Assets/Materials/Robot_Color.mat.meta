@@ -1,8 +1,11 @@
 fileFormatVersion: 2
-guid: c11a2820c0e2e7a4db3534d0a8047836
+guid: 0aa851515cd3747d6b3b3e461199a2ed
 NativeFormatImporter:
-  externalObjects: {}
-  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/Shared Assets/Materials/Robot_Color.mat
+  uploadId: 776507

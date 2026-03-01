@@ -1,7 +1,12 @@
 fileFormatVersion: 2
-guid: 63fa9ec1414c84c4fa271b34996a3bfc
-PrefabImporter:
-  externalObjects: {}
+guid: e41946a981c3b444a84d15eb7c608ca4
+NativeFormatImporter:
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/PunBasics-Tutorial/Prefabs/Player
+    UI.prefab
+  uploadId: 776507

@@ -1,8 +1,15 @@
 fileFormatVersion: 2
-guid: 9c831deff4a8c1444bf4c31a12942ef9
+guid: 609dbe3d30c4bf84ca15ce89479d7919
+timeCreated: 1505213348
+licenseType: Store
 NativeFormatImporter:
-  externalObjects: {}
-  mainObjectFileID: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/DemoAsteroids/Models/Materials/SpaceshipGlow.mat
+  uploadId: 776507

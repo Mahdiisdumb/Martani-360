@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: 0c3ad159a95665d49a000cef7f3d7dfd
+guid: d85daee5b585047f89b7e2dde78b336b
+timeCreated: 1524225584
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 119922
+  packageName: PUN 2 - FREE
+  packageVersion: 2.51
+  assetPath: Assets/Photon/PhotonUnityNetworking/Demos/PunCockpit/Scripts/InfosPanelPlaceholder.cs
+  uploadId: 776507

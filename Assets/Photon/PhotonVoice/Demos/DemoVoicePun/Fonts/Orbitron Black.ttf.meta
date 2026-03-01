@@ -1,21 +1,25 @@
 fileFormatVersion: 2
-guid: 2528a56bea42c834293491cb818dec9c
+guid: 253eb4f81b3a5264099f294bfc0fbb8c
+timeCreated: 1454948443
+licenseType: Store
 TrueTypeFontImporter:
-  externalObjects: {}
-  serializedVersion: 4
+  serializedVersion: 2
   fontSize: 16
   forceTextureCase: -2
-  characterSpacing: 0
-  characterPadding: 1
+  characterSpacing: 1
+  characterPadding: 0
   includeFontData: 1
-  fontNames:
-  - Orbitron
-  fallbackFontReferences: []
+  use2xBehaviour: 0
+  fontNames: []
   customCharacters: 
   fontRenderingMode: 0
-  ascentCalculationMode: 1
-  useLegacyBoundsCalculation: 0
-  shouldRoundAdvanceValue: 1
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 130518
+  packageName: Photon Voice 2
+  packageVersion: 2.59
+  assetPath: Assets/Photon/PhotonVoice/Demos/DemoVoicePun/Fonts/Orbitron Black.ttf
+  uploadId: 756092
