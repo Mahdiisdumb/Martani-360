@@ -137,6 +137,11 @@ namespace Photon.Voice
                 throw new Exception(LogPrefix + ": non 0 frame size required for framed stream");
             }
 
+            if (inSampleRate <= 0)
+            {
+                throw new Exception(LogPrefix + ": invalid input sample rate " + inSampleRate);
+            }
+
             OptimalSourceFrameSize = voiceInfo.FrameSize;
             if (voiceInfo.SamplingRate != 0 && inSampleRate != voiceInfo.SamplingRate)
             {

@@ -60,7 +60,11 @@ namespace Photon.Voice.PUN
             {
                 if (instance == null)
                 {
+                    #if UNITY_6000_0_OR_NEWER
+                    PunVoiceClient[] objects = FindObjectsByType<PunVoiceClient>(FindObjectsSortMode.InstanceID);
+                    #else
                     PunVoiceClient[] objects = FindObjectsOfType<PunVoiceClient>();
+                    #endif
                     if (objects == null || objects.Length < 1)
                     {
                         GameObject singleton = new GameObject();
@@ -209,6 +213,7 @@ namespace Photon.Voice.PUN
                     settings.FixedRegion = PhotonNetwork.CloudRegion; // makes sure the voice connection follows into the same cloud region (as PUN uses now).
                 }
 
+                this.Client.ServerPortOverrides = PhotonNetwork.ServerPortOverrides;    // new in v2.63, applying the same ports as PUN uses
                 this.Client.SerializationProtocol = PhotonNetwork.NetworkingClient.SerializationProtocol;
             }
 

@@ -1,5 +1,60 @@
 Photon Voice 2 Change Log
 
+v2.63 (February 23, 2026)
+   PUN2: v2.52
+   RT/lib: v4.1.8.17  (resending improvements)
+   PhotonVoiceApi: revision 8254
+   Unity: 2021.3.45f2 or higher
+Core:
+   CHANGED: LocalVoiceFramed constructor handles invalid inSampleRate 
+Unity:
+   CHANGED: UnityVoiceClient calls transport and voice client Service() from Update() 30 times per sec.
+   FIXED: DispatchIncomingCommands() was not called from FixedUpdate() if Time.timeScale = 0
+   CHANGED: Unity 6 no longer uses obsolete APIs like FindObjectsOfType, FindObjectOfType
+   CHANGED: Mp3 files to wav format.
+   ADDED: Compile conditions to not use OpenGLES2 anymore in Unity 2023.1 or newer. It is no longer supported in those versions.
+WebGL:
+   FIXED: undefined symbol build errors introduced in v2.62
+Pun:
+   MINOR: If PunVoiceClient.UsePunAppSettings is true (default) it will now also copy the PhotonNetwork.ServerPortOverrides to use the same port range. E.g. if PUN uses the alternative UDP port range (2700x), Voice will as well.
+
+v2.62 (November 24, 2025)
+   PUN2: v2.51 (PUN2.51)
+   RT/lib: v4.1.8.16
+   PhotonVoiceApi: revision 8085
+   Unity: 2019.4.39 or higher
+Unity:
+   FIXED: UnityAudioOut calls Object.Destroy() for the clip in Stop() to avoid memory leaks
+iOS, visionOS:
+   FIXED: opus static libraries symbols are prefixed with egpv_ to avoid conflicts
+MacOS:
+   FIXED: AudioInPusher and AudioInReader are created and disposed in worker threads to prevent main thread lag
+PS4/PS5:
+   CHANGED: the Sony SDK version of all PS4 native plugins to SDK 12.5
+   CHANGED: the Sony SDK version of all PS5 native plugins to SDK 1.0
+   ADDED: support for changing the volume to PlayStationAudioOut and PhotonVoiceAudioOutputPlugin
+   FIXED: PlayStationAudioOut now waits 50ms after playing output has ended before setting the value of the IsPlaying property back to false to avoid flickering visual IsPlaying indicators
+
+v2.61 (October 28, 2025)
+   PUN2: v2.51 (PUN2.51)
+   RT/lib: v4.1.8.16
+   PhotonVoiceApi: revision 8085
+   Unity: 2019.4.39 or higher
+   UPDATED: Photon3Unity3D.dll, Photon Realtime (LoadBalancing), Photon Chat to v4.1.8.16, PUN to v2.51
+Unity: 
+   CHANGED: default Recorder frameDuration to Frame40ms for a slightly more conservative interval.
+Android:
+   CHANGED: x86_64 opus and webrtc_audio libraries 16kb alignment
+   CHANGED: AudioInAEC: added null checks for created hardware effects which may be null even if isAvailable() is true
+WebGL:
+   ADDED: Platform.CreateUnityAudioOut() factory returns WebAudioAudioOut on WebGL and UnityAudioOut on other platforms
+PS4/PS5:
+   FIXED: PlayStationAudioOut::Push() wasn't entirely thread-safe
+Nintendo Switch:
+   ADDED: Opus codec support for Switch 2
+   ADDED: libPhotonVoiceAudioInputPlugin.a for the Switch
+   UPDATED: the Switch build of opus_egpv.a to the same Nintendo SDK as used for the Switch 2 build
+
 v2.59 (May 13, 2025)
    PUN2: v2.49 (PUN2.49)
    RT/lib: v4.1.8.15
@@ -7,7 +62,7 @@ v2.59 (May 13, 2025)
    Unity: 2019.4.39 or higher
    UPDATED: Photon3Unity3D.dll, Photon Realtime (LoadBalancing), Photon Chat to v4.1.8.15
 Core:   
-   ADDED: ByteStreamEncoder and ByteStreamDecoder for steaming byte buffers without processing
+   ADDED: ByteStreamEncoder and ByteStreamDecoder for streaming byte buffers without processing
    ADDED: Custom1 - Custom9 items in Codec enum for user codec implementations
 WebGL:
    BREAKING: panner node rolloff parameters removed from WebAudioAudioOut() constructor and set via new SetRefDistance() and SetMaxDistance() methods from Update() (similar to volume parameter)
@@ -33,7 +88,7 @@ Core:
    FIXED: AudioOutDelayControl buffer minimal size check used the wrong value and never worked
 Unity:
    FIXED: VoiceComponentImpl.Level always returned 0
-   FIXED: the scene marked as dirty after updating VoiceLogger.LogLevel from another inspector in Editor to not loose the change
+   FIXED: the scene marked as dirty after updating VoiceLogger.LogLevel from another inspector in Editor to not lose the change
    FIXED: UnityAudioOut zeroes the clip after creation because it may contain non-zero data (e.g. from previously created clip initialized with pcmreadercallback).
 Android:
    CHANGED: audio capture session is initialized and destroyed asynchronously to prevent ui freezes
@@ -63,7 +118,7 @@ v2.56 (August 19, 2024)
    UPDATED: Photon3Unity3D.dll, Photon Realtime (LoadBalancing), Photon Chat to v4.1.8.8
 Unity:
    FIXED: VoiceFollowClient leaves the room instead of disconnecting the server when follows the "not in room" leader's state: disconnect left the player in the room in an inactive state preventing subsequent connection with the same UserId
-   CHNAGED: LoggerImpl cashes VoiceLogger.LogLevel in SetVoiceLogger() and Log() and uses the cashed value if Log() is called after the VoiceLogger instance is destroyed
+   CHANGED: LoggerImpl caches VoiceLogger.LogLevel in SetVoiceLogger() and Log() and uses the cached value if Log() is called after the VoiceLogger instance is destroyed
    NOTE: this mitigates but not completely fixes the wrong logging level during scene unload if the global VoiceLogger is destroyed earlier than the logging component; use local VoiceLogger instances to avoid this
    CHANGED: do not create a voice settings file in the voice install sub-folder if voice is installed in the Packages folder (and then potentially not writable)
 FMOD:
@@ -129,7 +184,7 @@ FMOD:
    BREAKING: FMOD.AudioInReader no longer replaces -1 device id with 0 assuming that -1 is Voice API default mic: callers should always pass FMOD-specific device id
 DemoVoiceUI:
    ADDED: FMOD microphone input support implemented via Recorder.InputFactory, added internal MicType and made other changes to integrate FMOD mic into the microphone list and differentiate it from AudioTone source, also factory based
-   CHNAGED: RemoteSpeakerUI does not require Speaker (for easier manipulations in Editor)
+   CHANGED: RemoteSpeakerUI does not require Speaker (for easier manipulations in Editor)
    CHANGED: remote player UserId replaced with NickName + ActorNr in UI
 
 v2.53 (September 06, 2023)
@@ -185,7 +240,7 @@ iOS:
 Android:
    CHANGED: audio library: all permissions removed from the manifest, user must set permissions correctly in the application manifest
 WebGL:
-   CHANGED: Platform.CreateAudioInEnumerator() returns an instance of the new DeviceEnumeratorSingleDevice calss with the device named 'Default' instead of AudioInEnumeratorNotSupported for Unity WebGL platform
+   CHANGED: Platform.CreateAudioInEnumerator() returns an instance of the new DeviceEnumeratorSingleDevice class with the device named 'Default' instead of AudioInEnumeratorNotSupported for Unity WebGL platform
    CHANGED: Unity.AudioInEnumerator and UnityMicrophone rely on Unity Microphone API in Editor even if the platform is WebGL
 Other:
    CHANGED: Unity methods are made protected virtual in UnityVoiceClient, FusionVoiceClient, PunVoiceClient and Speaker to allow component inheritance
@@ -200,7 +255,7 @@ Demos:
    CHANGED: DemoVoicePun lists both Unity and Photon microphones in the device info
    CHANGED: DelayProcessor attenuates original signal to avoid overload
 DemoVoiceUI:
-   ADDED: mic intesity bar + color when transmitting
+   ADDED: mic intensity bar + color when transmitting
    ADDED: Android native microphone settings to demo ui
 
 v2.51 (February 02, 2023)
@@ -451,7 +506,7 @@ v2.29 (December 24th, 2021)
    PUN2: v2.40 (14f52ea) [RT/lib:4.1.6.11]
    PhotonVoiceApi: revision 6315
    ADDED: [Nintendo Switch] audio input (Photon microphone type) and audio devices change detection via native plugin (requires separate add-on).
-   FIXED: Recorder now sends PhotonVoiceRemoved message inside OnDestroy as component may be destoryed (processors need to disposed of) while GameObject remains.
+   FIXED: Recorder now sends PhotonVoiceRemoved message inside OnDestroy as component may be destroyed (processors need to disposed of) while GameObject remains.
    FIXED: [WebRtcAudioDsp.AEC] issues due to thread safety (Unity main thread vs. OnAudioFilterRead thread).
    ADDED: [WebRtcAudioDsp.AEC] AutoRestartOnAudioChannelsMismatch to toggle behaviour (default is true).
    ADDED: [WebRtcAudioDsp.AEC] more logging to help debugging in case of issues.
@@ -565,7 +620,7 @@ v2.25 (June 7th, 2021)
    PhotonVoiceApi: revision 6086
    CHANGED: [BREAKING] Voice.AudioInEnumerator code changed, some methods and a property were removed.
    REMOVED: [BREAKING] obsolete method Recorder.Init(VoiceClient, Object).
-   FIXED: Speaker.OnRemoteVoiceInfo (linking) return value (Initialized & either (should not start playback OR playbak started).
+   FIXED: Speaker.OnRemoteVoiceInfo (linking) return value (Initialized & either (should not start playback OR playback started).
    ADDED: Recorder.PhotonMicrophoneDeviceIdString in UWP/WSA context as ID is string in this case and not int.
    ADDED: generic unified Recorder.MicrophoneDevice to get or set microphone device (using enumerator via Recorder.MicrophonesEnumerator) no matter the microphone type.
    CHANGED: Recorder.PhotonMicrophoneEnumerator is now obsolete, use the new generic unified non-static Recorder.MicrophonesEnumerator which works for all microphone types even Unity one.
@@ -622,7 +677,7 @@ v2.23.2 (March 10th, 2021)
    FIXED: [DemoProximityVoiceChat] ChangeColour script to call RPC only if IsMine.
    FIXED: [DemoProximityVoiceChat] ChangeColour RPC is buffered.
    FIXED: [DemoProximityVoiceChat] ProximityVoiceTrigger checks if attached to local player and disable it if not.
-   ADDED: debug logs when Recorder is destoryed or local voice removed.
+   ADDED: debug logs when Recorder is destroyed or local voice removed.
 
 v2.23.1 (February 25th, 2021)
    PUN2: v2.28.1 (433550f)
@@ -825,7 +880,7 @@ v2.17 (May 29th, 2020)
    CHANGED: [PunVoiceDemo] CharacterInstantiation PUN demo script updated to be in sync w/ PUN 2's new OnJoinedInstantiate.
    FIXED: [PhotonVoiceView] correct way to tell if PhotonView is valid or not yet.
    FIXED: 2 CS0649 warnings: Field is never assigned by setting default value to false.
-   FIXED: inconsistent EoL warning in on (re)complie/import.
+   FIXED: inconsistent EoL warning in on (re)compile/import.
    FIXED: [Editor only] minor, removing wrong useless code in RecorderEditor.RefreshPhotonMicrophoneDevices.
    FIXED: [Editor only] NullReferenceException when Photon mic name is null.
    CHANGED: [Editor only] minor, RecorderEditor.SetEnumIndex method is used in iOS Editor only.
@@ -965,7 +1020,7 @@ v2.7 (May 17th, 2019)
    ADDED: asmdef: PhotonVoice.PUN and PhotonVoice.PUN.Editor. 
    CHANGED: VoiceConnection.usePunSettings and related custom editor code removed: use VoiceConnection.ConnectUsingSettings(settings) to pass PUN settings if needed.
    ADDED: PhotonVoiceEditorUtils and Editor shortcuts to remove PUN or Photon Chat. 
-   CHANGED: iOS's audio initialization session parameters exposed in Editor and can be set using Recoder.SetIosAudioSessionParameters methods.
+   CHANGED: iOS's audio initialization session parameters exposed in Editor and can be set using Recorder.SetIosAudioSessionParameters methods.
    CHANGED: changelog.txt renamed to changes-voice.txt.
 
 v2.6.1 (April 30th, 2019)
@@ -983,7 +1038,7 @@ v2.6 (April 26th, 2019)
    CHANGED: Recorder.StartRecording and Recorder.StopRecording methods added.
    CHANGED: Recorder.AutoStart property added and exposed in custom editor.
    FIXED: Recorder.TypeConvert changes applied properly when recording is restarted.
-   CHANGED: Recorder.Init should not be used to restart recording, use Recoder.RestartRecording instead.
+   CHANGED: Recorder.Init should not be used to restart recording, use Recorder.RestartRecording instead.
    CHANGED: extra checks added for WebRtcAudioDsp (only Microphone supported, once disabled won't be reused)
    CHANGED: shortcut to PhotonServerSettings added to VoiceConnection custom editor
    CHANGED: warning removed from PhotonVoiceNetwork after using the newly renamed PascalCase ClientState values

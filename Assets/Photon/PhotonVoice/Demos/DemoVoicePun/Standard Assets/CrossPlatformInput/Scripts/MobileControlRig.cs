@@ -41,10 +41,15 @@ namespace UnityStandardAssets.CrossPlatformInput
             if (Application.isPlaying) //if in the editor, need to check if we are playing, as start is also called just after exiting play
 #endif
             {
-                UnityEngine.EventSystems.EventSystem system = GameObject.FindObjectOfType<UnityEngine.EventSystems.EventSystem>();
+                #if UNITY_6000_0_OR_NEWER
+                UnityEngine.EventSystems.EventSystem system = FindFirstObjectByType<UnityEngine.EventSystems.EventSystem>();
+                #else
+                UnityEngine.EventSystems.EventSystem system = FindObjectOfType<UnityEngine.EventSystems.EventSystem>();
+                #endif
 
                 if (system == null)
-                {//the scene have no event system, spawn one
+                {
+                    //the scene have no event system, spawn one
                     GameObject o = new GameObject("EventSystem");
 
                     o.AddComponent<UnityEngine.EventSystems.EventSystem>();

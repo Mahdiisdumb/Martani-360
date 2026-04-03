@@ -230,12 +230,16 @@
 
         protected virtual void DisplayCachedVoiceInfo()
         {
-            this.showCachedVoices =
-                EditorGUILayout.Foldout(this.showCachedVoices, new GUIContent("Cached Remote Voices' Info", "Show remote voices info cached by local client"));
+            this.showCachedVoices = EditorGUILayout.Foldout(this.showCachedVoices, new GUIContent("Cached Remote Voices' Info", "Show remote voices info cached by local client"));
             if (this.showCachedVoices)
             {
                 List<RemoteVoiceLink> cachedVoices = this.connection.CachedRemoteVoices;
+
+                #if UNITY_6000_0_OR_NEWER
+                Speaker[] speakers = FindObjectsByType<Speaker>(FindObjectsSortMode.InstanceID);
+                #else
                 Speaker[] speakers = FindObjectsOfType<Speaker>();
+                #endif
                 for (int i = 0; i < cachedVoices.Count; i++)
                 {
                     //VoiceInfo info = cachedVoices[i].Info;

@@ -86,13 +86,16 @@ namespace Photon.Voice.Unity
         [SerializeField]
         private bool runInBackground = true;
 
+        private const int ServiceInterval = 33; // 30 times/sec.
+
         /// <summary>
         /// time [ms] between statistics calculations
         /// </summary>
         [SerializeField]
         private int statsResetInterval = 1000;
 
-        private int nextStatsTickCount = Environment.TickCount;
+        private int lastService = Environment.TickCount;
+        private int lastStatsUpdate = Environment.TickCount;
 
         private float statsReferenceTime;
         private int referenceFramesLost;
@@ -131,7 +134,11 @@ namespace Photon.Voice.Unity
 
         private void Init()
         {
+#if PHOTON_VOICE_PLUGIN_ENABLE
+            this.client = new VoicePluginTransport(this.Logger, ConnectionProtocol.Udp, cppCompatibilityMode);
+#else
             this.client = new LoadBalancingTransport2(this.Logger, ConnectionProtocol.Udp, cppCompatibilityMode);
+#endif
             this.client.VoiceClient.OnRemoteVoiceInfoAction += this.OnRemoteVoiceInfo;
             this.client.StateChanged += this.OnVoiceStateChanged;
             this.client.OpResponseReceived += this.OnOperationResponseReceived;
@@ -330,29 +337,18 @@ namespace Photon.Voice.Unity
 
         protected virtual void Update()
         {
-            this.VoiceClient.Service();
-        }
-
-        protected virtual void FixedUpdate()
-        {
-#if UNITY_WEBGL && !UNITY_EDITOR // called in TimerWorker
-#else
-            while (this.Client.LoadBalancingPeer.DispatchIncomingCommands()) ;
-#endif
-        }
-
-        private void LateUpdate()
-        {
-            while (this.Client.LoadBalancingPeer.SendOutgoingCommands()) ;
-
-            if (this.statsResetInterval > 0)
+            int tickCount = Environment.TickCount;
+            if (tickCount - this.lastService > ServiceInterval)
             {
-                int currentMsSinceStart = Environment.TickCount; // avoiding Environment.TickCount, which could be negative on long-running platforms
-                if (currentMsSinceStart - this.nextStatsTickCount > 0)
-                {
-                    this.CalcStatistics();
-                    this.nextStatsTickCount = currentMsSinceStart + this.statsResetInterval;
-                }
+                this.lastService = tickCount;
+                this.Client.LoadBalancingPeer.Service();
+                this.VoiceClient.Service();
+            }
+
+            if (this.statsResetInterval > 0 && tickCount - this.lastStatsUpdate > this.statsResetInterval)
+            {
+                this.lastStatsUpdate = tickCount;
+                this.CalcStatistics();
             }
         }
 

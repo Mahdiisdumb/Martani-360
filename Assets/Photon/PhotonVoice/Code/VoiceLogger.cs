@@ -24,7 +24,7 @@ namespace Photon.Voice.Unity
         {
         }
 
-        static public VoiceLogger FindLogger(GameObject gameObject)
+        public static VoiceLogger FindLogger(GameObject gameObject)
         {
             // serach through the hierarchy
             for (var go = gameObject; go != null; go = go.transform.parent == null ? null : go.transform.parent.gameObject)
@@ -38,7 +38,12 @@ namespace Photon.Voice.Unity
 
             // look for VoiceLogger at the root
             VoiceLogger vlRoot = null;
-            foreach (var vl in Object.FindObjectsOfType<VoiceLogger>())
+            #if UNITY_6000_0_OR_NEWER
+            VoiceLogger[] vlArray = FindObjectsByType<VoiceLogger>(FindObjectsSortMode.InstanceID);
+            #else
+            VoiceLogger[] vlArray = FindObjectsOfType<VoiceLogger>();
+            #endif
+            foreach (var vl in vlArray)
             {
                 if (vl.transform.parent == null && vl.enabled)
                 {
@@ -56,14 +61,14 @@ namespace Photon.Voice.Unity
             return vlRoot;
         }
 
-        static public VoiceLogger CreateRootLogger()
+        public static VoiceLogger CreateRootLogger()
         {
             var logObject = new GameObject("VoiceLogger");
             return logObject.AddComponent<VoiceLogger>();
         }
 
 #if UNITY_EDITOR
-        static public void EditorVoiceLoggerOnInspectorGUI(GameObject gameObject)
+        public static void EditorVoiceLoggerOnInspectorGUI(GameObject gameObject)
         {
             var vl = FindLogger(gameObject);
             if (vl == null)

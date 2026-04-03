@@ -663,10 +663,7 @@ namespace Photon.Voice
             /// <summary>
             /// Maximum amplitude value over last half second sec.
             /// </summary>
-            float CurrentPeakAmp
-            {
-                get;
-            }
+            float CurrentPeakAmp { get; }
 
             /// <summary>
             /// Average of CurrentPeakAmps since last reset.

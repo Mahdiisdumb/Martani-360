@@ -32,6 +32,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RTC.unity
     guid: dd85442b7d3a3f047ad9a1e3df419bcf
+  - enabled: 1
+    path: Assets/Scenes/Tributes.unity
+    guid: f3ac29f28cf2d11448b86ccc47439388
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: e6c42826aea30fc4aa6b32c7235d35f1, type: 2}
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}

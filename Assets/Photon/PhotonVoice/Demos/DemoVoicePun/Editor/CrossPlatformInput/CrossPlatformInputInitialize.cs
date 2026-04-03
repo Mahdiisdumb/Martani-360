@@ -2,6 +2,11 @@ using System;
 using System.Collections.Generic;
 using UnityEditor;
 
+#if UNITY_2021_3_OR_NEWER
+using UnityEditor.Build;
+#endif
+
+
 namespace UnityStandardAssets.CrossPlatformInput.Inspector
 {
     [InitializeOnLoad]
@@ -120,14 +125,37 @@ namespace UnityStandardAssets.CrossPlatformInput.Inspector
                     }
                 }
                 string definesString = string.Join(";", defines.ToArray());
-                PlayerSettings.SetScriptingDefineSymbolsForGroup(group, definesString);
+                SetScriptingDefines(group, definesString);
             }
         }
 
 
         private static List<string> GetDefinesList(BuildTargetGroup group)
         {
-            return new List<string>(PlayerSettings.GetScriptingDefineSymbolsForGroup(group).Split(';'));
+            return new List<string>(GetScriptingDefines(group).Split(';'));
+        }
+
+        
+        private static string GetScriptingDefines(BuildTargetGroup group)
+        {
+            #if UNITY_2021_3_OR_NEWER
+            var namedBuildTarget = NamedBuildTarget.FromBuildTargetGroup(group);
+            var defineSymbolsString = PlayerSettings.GetScriptingDefineSymbols(namedBuildTarget);
+            #else
+            var defineSymbolsString = PlayerSettings.GetScriptingDefineSymbolsForGroup(group);
+            #endif
+
+            return defineSymbolsString;
+        }
+
+        private static void SetScriptingDefines(BuildTargetGroup group, string defines)
+        {
+            #if UNITY_2021_3_OR_NEWER
+            var namedBuildTarget = NamedBuildTarget.FromBuildTargetGroup(group);
+            PlayerSettings.SetScriptingDefineSymbols(namedBuildTarget, defines);
+            #else
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(group, defines);
+            #endif
         }
     }
 }

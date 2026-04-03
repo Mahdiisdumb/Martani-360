@@ -1,5 +1,41 @@
 Photon Voice API Change Log
 
+v2.63 (February 23, 2026)
+Android:
+   ADDED: Vulkan support for video display in Unity texture (AndroidTextureView)
+   ADDED: Vulkan support for Unity texture encoding (AndroidTextureVideoEncoder)
+   FIXED: multiple video display: 1st TextureView output frozen when 2nd TextureView started
+
+v2.62 (November 24, 2025)
+Unity:
+   FIXED: UnityAudioOut calls Object.Destroy() for the clip in Stop() to avoid memory leaks
+iOS, visionOS:
+   FIXED: opus static libraries symbols are prefixed with egpv_ to avoid conflicts
+MacOS:
+   FIXED: AudioInPusher and AudioInReader are created and disposed in worker threads to prevent main thread lag
+PS4/PS5:
+   ADDED: support for changing the volume to PlayStationAudioOut and PhotonVoiceAudioOutputPlugin
+   FIXED: PlayStationAudioOut now waits 50ms after playing output has ended before setting the value of the IsPlaying property back to false to avoid flickering visual IsPlaying indicators
+
+v2.61 (October 28, 2025)
+Core:
+   FIXED: outgoing fragments count and fragment size calculation (corrupted data for some payload sizes around 2 full packets)
+Unity:
+   BREAKING: ScreenRecorder.SetEncoder() -> Init(), ScreenRecorder selects the encoder itself
+   ADDED: VideoRecorderUnity.StartRecord() now checks if there are any devices to start. Else, it stops early with an Error log.
+Android:
+   CHANGED: AudioInAEC: added null checks for created hardware effects which may be null even if isAvailable() is true
+   FIXED: native video library low resolution of camera preview
+   ADDED: Unity.AndroidTextureVideoEncoder: encodes an arbitrary Unity texture as video
+   ADDED: Android native SurfaceDrawer: draws a texture on a Surface
+   ADDED: Unity.ScreenRecorder implementation for Android via AndroidTextureVideoEncoder
+WebGL:
+   ADDED: Platform.CreateUnityAudioOut() factory returns WebAudioAudioOut on WebGL and UnityAudioOut on other platforms
+PS4/PS5:
+   FIXED: PlayStationAudioOut::Push() wasn't entirely thread-safe
+Nintendo Switch:
+   ADDED: Opus codec support for Switch 2
+
 v2.59 (May 13, 2025)
 Core:
    CHANGED: incoming events ring buffer can be of arbitrary size to better support high bitrate video streams
@@ -9,7 +45,7 @@ Core:
    FIXED: continuous buffer allocations by audio sources with variable buffer size
    BREAKING: added IAudioPusher<T>.SetCallback() 'optimalFrameSize' parameter, hinting the preferable frame size to the source (actually used only in AndroidAudioInAEC)
    ADDED: VoiceClient.SetRemoteVoiceDelayFrames() overload setting the delay for Codec enum elements that matches the condition specified in the predicate function (1 call for multiple codecs)
-   ADDED: ByteStreamEncoder and ByteStreamDecoder for steaming byte buffers without processing
+   ADDED: ByteStreamEncoder and ByteStreamDecoder for streaming byte buffers without processing
    ADDED: Custom1 - Custom9 items in Codec enum for user codec implementations
 WebGL:
    BREAKING: panner node rolloff parameters removed from WebAudioAudioOut() constructor and set via new SetRefDistance() and SetMaxDistance() methods from Update() (similar to volume parameter)
@@ -117,7 +153,7 @@ Core:
    CHANGED: frame number is added to every event, it's used to run events processing queue instead of event number
    NOTE: this is the only way to correctly count dropped frames when fragmentation is enabled, which is important for codecs that recover dropped frames, such as Opus (although Opus never uses fragmentation, event and frame numbers are always the same for it)
    NOTE: advancing at the frame pace is more natural, it allows to keep given frame delay and catch up with bursts of fragmented frames events in time
-   BREAKING: 'frNumber' parameter added to IVoiceTransport.SendFrame(), it can be ignored by SendFrame() implamentation if fragmentation is not used
+   BREAKING: 'frNumber' parameter added to IVoiceTransport.SendFrame(), it can be ignored by SendFrame() implementation if fragmentation is not used
    ADDED: FrameBuffer.FrameNum property
 Fragmentation:
    ADDED: LocalVoice.Fragment: if true, large frames are fragmented to multiple events by LocalVoice and assembled by RemoteVoice
@@ -178,6 +214,6 @@ Android:
    CHANGED: AndroidAudioInParameters turned into struct (with static Default property for default value) and [System.Serializable] attribute added to it to support Unity components fields serialization
    CHANGED: all AndroidAudioInParameters fields are true by default
 WebGL:
-   CHANGED: Platform.CreateAudioInEnumerator() returns an instance of the new DeviceEnumeratorSingleDevice calss with the device named 'Default' instead of AudioInEnumeratorNotSupported for Unity WebGL platform
+   CHANGED: Platform.CreateAudioInEnumerator() returns an instance of the new DeviceEnumeratorSingleDevice class with the device named 'Default' instead of AudioInEnumeratorNotSupported for Unity WebGL platform
    CHANGED: Unity.AudioInEnumerator and UnityMicrophone rely on Unity Microphone API in Editor even if the platform is WebGL
  

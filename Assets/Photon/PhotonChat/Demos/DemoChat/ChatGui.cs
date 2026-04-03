@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.UI;
-
+using Photon.Chat.DemoChat;
 using Photon.Chat;
 using Photon.Realtime;
 using AuthenticationValues = Photon.Chat.AuthenticationValues;

@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: 8c8c9f9a-cd67-4fc4-bd58-70b59c0ca0eb
+    AppIdRealtime: 
     AppIdFusion: 
     AppIdChat: 
-    AppIdVoice: a94f713b-2621-4729-b36a-610e6c4b51c4
+    AppIdVoice: 
     AppVersion: 
     UseNameServer: 1
-    FixedRegion: us
+    FixedRegion: 
     Server: 
     Port: 0
     ProxyServer: 
@@ -40,16 +40,14 @@ MonoBehaviour:
   - DestroyRpc
   - HeresWhy
   - DestroySpaceship
+  - EndRound
   - Fire
+  - FireBullet
+  - OnHit
   - RespawnSpaceship
   - RPCRefreshPlayerValues
-  - SyncThrow
-  - SyncText
   - SetTagger
-  - FireBullet
-  - HandleDeath
-  - EndRound
-  - OnHit
+  - SyncText
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 0

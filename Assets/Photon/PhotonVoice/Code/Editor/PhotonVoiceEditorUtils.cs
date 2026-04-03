@@ -5,6 +5,10 @@ using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
 
+#if UNITY_2021_3_OR_NEWER
+using UnityEditor.Build;
+#endif
+
 namespace Photon.Voice.Unity.Editor
 {
     [InitializeOnLoad] // calls static constructor when script is recompiled
@@ -160,6 +164,29 @@ namespace Photon.Voice.Unity.Editor
             return Application.isPlaying && !IsPrefab(go);
         }
 
+        
+        private static string GetScriptingDefines(BuildTargetGroup group)
+        {
+            #if UNITY_2021_3_OR_NEWER
+            var namedBuildTarget = NamedBuildTarget.FromBuildTargetGroup(group);
+            var defineSymbolsString = PlayerSettings.GetScriptingDefineSymbols(namedBuildTarget);
+            #else
+            var defineSymbolsString = PlayerSettings.GetScriptingDefineSymbolsForGroup(group);
+            #endif
+
+            return defineSymbolsString;
+        }
+
+        private static void SetScriptingDefines(BuildTargetGroup group, string defines)
+        {
+            #if UNITY_2021_3_OR_NEWER
+            var namedBuildTarget = NamedBuildTarget.FromBuildTargetGroup(group);
+            PlayerSettings.SetScriptingDefineSymbols(namedBuildTarget, defines);
+            #else
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(group, defines);
+            #endif
+        }
+
         /// <summary>
         /// Removes a given scripting define symbol to all build target groups
         /// You can see all scripting define symbols ( not the internal ones, only the one for this project), in the PlayerSettings inspector
@@ -176,13 +203,13 @@ namespace Photon.Voice.Unity.Editor
                     continue;
                 }
 
-                var defineSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(group).Split(';').Select(d => d.Trim()).ToList();
+                var defineSymbols = GetScriptingDefines(group).Split(';').Select(d => d.Trim()).ToList();
 
                 if (defineSymbols.Contains(defineSymbol) && defineSymbols.Remove(defineSymbol))
                 {
                     try
                     {
-                        PlayerSettings.SetScriptingDefineSymbolsForGroup(group, string.Join(";", defineSymbols.ToArray()));
+                        SetScriptingDefines(group, string.Join(";", defineSymbols.ToArray()));
                     }
                     catch (Exception e)
                     {
@@ -199,13 +226,13 @@ namespace Photon.Voice.Unity.Editor
         /// <param name="go">The GameObject to check</param>
         public static bool IsPrefab(GameObject go)
         {
-#if UNITY_2021_2_OR_NEWER
+            #if UNITY_2021_2_OR_NEWER
             return UnityEditor.SceneManagement.PrefabStageUtility.GetPrefabStage(go) != null || EditorUtility.IsPersistent(go);
-#elif UNITY_2018_3_OR_NEWER
+            #elif UNITY_2018_3_OR_NEWER
             return UnityEditor.Experimental.SceneManagement.PrefabStageUtility.GetPrefabStage(go) != null || EditorUtility.IsPersistent(go);
-#else
+            #else
             return EditorUtility.IsPersistent(go);
-#endif
+            #endif
         }
 
         /// <summary>
@@ -222,7 +249,7 @@ namespace Photon.Voice.Unity.Editor
                     continue;
                 }
 
-                var defineSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(group)
+                var defineSymbols = GetScriptingDefines(group)
                     .Split(';')
                     .Select(d => d.Trim())
                     .ToList();
@@ -240,7 +267,7 @@ namespace Photon.Voice.Unity.Editor
 
                 try
                 {
-                    PlayerSettings.SetScriptingDefineSymbolsForGroup(group, string.Join(";", newDefineSymbols.ToArray()));
+                    SetScriptingDefines(group, string.Join(";", newDefineSymbols.ToArray()));
                 }
                 catch (Exception e)
                 {
