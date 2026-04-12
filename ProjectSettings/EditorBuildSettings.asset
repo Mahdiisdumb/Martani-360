@@ -35,6 +35,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tributes.unity
     guid: f3ac29f28cf2d11448b86ccc47439388
+  - enabled: 1
+    path: Assets/Scenes/TESTS.unity
+    guid: 43a3307b92b17cc44b65f2edf9ef4caf
+  - enabled: 1
+    path: Assets/Scenes/SOUND.unity
+    guid: 84cf19b0e3f65054b9034ada2d68d82a
+  - enabled: 1
+    path: Assets/Scenes/MODEL.unity
+    guid: 705ddd5993706b6449d172df7e0c1039
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: e6c42826aea30fc4aa6b32c7235d35f1, type: 2}
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
