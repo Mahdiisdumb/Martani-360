@@ -1671,6 +1671,7 @@ GameObject:
   m_Component:
   - component: {fileID: 761161397}
   - component: {fileID: 761161396}
+  - component: {fileID: 761161398}
   m_Layer: 0
   m_Name: SoundTestManager
   m_TagString: Untagged
@@ -1704,29 +1705,64 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8ca95a1305c951d4f946253b97012886, type: 3}
   - {fileID: 8300000, guid: e277f124dd40f8442a9120763d8ce9fd, type: 3}
   - {fileID: 8300000, guid: 16fba6d30ed741d4a9fdd6e79ee2f3ac, type: 3}
-  - {fileID: 8300000, guid: 1d4ffba877e11574b83dd66ffe09c3e2, type: 3}
   - {fileID: 8300000, guid: 8bd6df7214b718e4ba6cb345b8bed71c, type: 3}
+  - {fileID: 8300000, guid: 1d4ffba877e11574b83dd66ffe09c3e2, type: 3}
   - {fileID: 8300000, guid: 063e48535b59196488a13ac1641413bd, type: 3}
   - {fileID: 8300000, guid: 4aa5e83ae912c46409c45fc3f4f5cfe4, type: 3}
-  - {fileID: 8300000, guid: 3ccbc7d238c0b0a439b469026378986e, type: 3}
   - {fileID: 8300000, guid: 52ffbccca1224d143a6bbbca626ae566, type: 3}
+  - {fileID: 8300000, guid: 3ccbc7d238c0b0a439b469026378986e, type: 3}
   - {fileID: 8300000, guid: 5c58c2d254dccd94f928d635dc2ad685, type: 3}
   - {fileID: 8300000, guid: 62bc6077210fdac4e8c0b48936ce15ed, type: 3}
   - {fileID: 8300000, guid: a373cb80a4ed85d4f9e78202b0611180, type: 3}
   - {fileID: 8300000, guid: 62fe4f9a3b0f5ad44b115bb80ddb7837, type: 3}
   - {fileID: 8300000, guid: a9109a959ba049f48a461b81b343861a, type: 3}
+  - {fileID: 8300000, guid: c5747028be2d92a448fd6c9920fd5bf0, type: 3}
+  - {fileID: 8300000, guid: 8fc933ff94e848d42beacbc43dfe1a87, type: 3}
+  - {fileID: 8300000, guid: 69170d2cb29a7c2498df3cbca8e74496, type: 3}
+  - {fileID: 8300000, guid: e9e8fd32abc217845a872fd1cb5783ca, type: 3}
+  - {fileID: 8300000, guid: a8c154d28610c7e44a1e21e311f8f7dd, type: 3}
+  - {fileID: 8300000, guid: 5915658e183f5b34ebb44ebffb0ad3f9, type: 3}
+  - {fileID: 8300000, guid: 6c47c2f637634d641b8916c6f0d0fede, type: 3}
+  - {fileID: 8300000, guid: 49c8342782613da468c1d813bcdf17e4, type: 3}
+  - {fileID: 8300000, guid: be62f35f7f09b954bb237391c28a52ff, type: 3}
+  - {fileID: 8300000, guid: 6891a96b19b815b439f78e416d2c187c, type: 3}
+  - {fileID: 8300000, guid: 409da270394a42d49bf0b0e87e4ee43f, type: 3}
+  - {fileID: 8300000, guid: 04bb8c9f68af96546892398fa376328c, type: 3}
+  - {fileID: 8300000, guid: 53fba4b1d69e1a7429babbce898b629a, type: 3}
+  - {fileID: 8300000, guid: 7d84acfaba4699f49b431be616fd3296, type: 3}
+  - {fileID: 8300000, guid: 4aa4e2c2a44f6754386b7b61763c8753, type: 3}
+  - {fileID: 8300000, guid: 2f40b4c3e2dbf7e4ba32b755c205e9ae, type: 3}
+  - {fileID: 8300000, guid: e6ccc30fbc3bac942807b8a911655444, type: 3}
+  - {fileID: 8300000, guid: 4d396387be3a3414eb9f5f69d0e12377, type: 3}
   - {fileID: 8300000, guid: cc4f82c3808bf9c4a9770b71996d1e88, type: 3}
   - {fileID: 8300000, guid: 1b6ee8ab02b4ca74390fc88092c9befd, type: 3}
   - {fileID: 8300000, guid: b72e004168d66ff4ea5cf84533e7913e, type: 3}
   - {fileID: 8300000, guid: c3a513e8d642ecf4db15c7ac53d113ef, type: 3}
   - {fileID: 8300000, guid: e5e88e22a2e4bc946bcecb9cb1737035, type: 3}
   - {fileID: 8300000, guid: 8d2a8f96a4b29524a92e08444da6bda6, type: 3}
+  - {fileID: 8300000, guid: 10051dbd00ed58640abc10062bbd51f5, type: 3}
+  - {fileID: 8300000, guid: 547060484720ddc4fa6591f8c13d09ba, type: 3}
+  - {fileID: 8300000, guid: ecda4d40f7605b640a5786822be32e17, type: 3}
+  - {fileID: 8300000, guid: b16f22ede506ea945bfe9c80896080af, type: 3}
+  - {fileID: 8300000, guid: a2704ac5344ab174a97506921938eedf, type: 3}
+  - {fileID: 8300000, guid: 4827ea89519e07a4e9248a04d1543cde, type: 3}
+  - {fileID: 8300000, guid: 184b9efe3bf33624d9add5f98e5e74b8, type: 3}
+  - {fileID: 8300000, guid: 6014ae80236bb4a4699001e510e6e64a, type: 3}
+  - {fileID: 8300000, guid: 5743c9896a9eaaf47b594b73927c9845, type: 3}
+  - {fileID: 8300000, guid: 1552eb550725a254f90fa85ffc221c70, type: 3}
+  - {fileID: 8300000, guid: 321e508697f09a847ad1a072ba3639ca, type: 3}
+  - {fileID: 8300000, guid: ad9fc1e133a6973438a267aeef2c1819, type: 3}
+  - {fileID: 8300000, guid: 81ee8805c4a1f55458b2e1ba9d256e19, type: 3}
+  - {fileID: 8300000, guid: 409b7424138f3af40bd14aabecd98f16, type: 3}
+  - {fileID: 8300000, guid: b438408e2c7312d428692072323bb6bd, type: 3}
+  - {fileID: 8300000, guid: 6820615e80ac7104aa60b54ce733c56a, type: 3}
   - {fileID: 8300000, guid: 763447210ca7fd3488ce05987f87ba73, type: 3}
   - {fileID: 8300000, guid: 1cb761d3a2b41174ea253f98b468b3cc, type: 3}
   - {fileID: 8300000, guid: 6d1c117c87225ec4b8832a95dc53bbcd, type: 3}
-  - {fileID: 8300000, guid: 9551acf1c804ca74eac5c27dab68def9, type: 3}
   - {fileID: 8300000, guid: d35e9e1d6f876ce4c95f1eb8177f15ab, type: 3}
+  - {fileID: 8300000, guid: 9551acf1c804ca74eac5c27dab68def9, type: 3}
   - {fileID: 8300000, guid: a6a1bb7ea19834d4e88824aeb328327e, type: 3}
+  - {fileID: 8300000, guid: 747aa0c0d444aa14f9f3e10c0cc32499, type: 3}
   - {fileID: 8300000, guid: dae76b14ca84fda4ea37ae8e2c17ced4, type: 3}
   - {fileID: 8300000, guid: 235dcd778e0f5454d98b49090d0368d5, type: 3}
   - {fileID: 8300000, guid: e1015b68d7d16ee4ea2f794cdb75c250, type: 3}
@@ -1741,7 +1777,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 54ad6727c24a22148a591106f5de63ef, type: 3}
   - {fileID: 8300000, guid: 327887dc8166b92478936729b0abd258, type: 3}
   - {fileID: 8300000, guid: b266d12ffe4e12647b665f563ef16825, type: 3}
-  - {fileID: 8300000, guid: 747aa0c0d444aa14f9f3e10c0cc32499, type: 3}
   - {fileID: 8300000, guid: 319f41e2f3aa4b0439645ca93454491f, type: 3}
   - {fileID: 8300000, guid: 21beb0c5f408a9f469284cb06e2f0cf2, type: 3}
   - {fileID: 8300000, guid: 2555d588ed37a2e4fab57a95ef90d8bc, type: 3}
@@ -1761,6 +1796,103 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &761161398
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761161395}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &839847772
 GameObject:
   m_ObjectHideFlags: 0
@@ -2076,8 +2208,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SND (copyrighted music may exist here be aware that the copyrighted music
-    are just placeholders)
+  m_text: "SND (copyrighted music may exist here be aware that the copyrighted music
+    are just placeholders)\n\t\t\t\t\t(SOME SOUNDS ARE MULTIPLIED)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
