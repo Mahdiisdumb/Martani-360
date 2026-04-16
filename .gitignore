@@ -3,3 +3,7 @@
 /Temp
 /Logs
 /Rel/Windows
+/Rel/Android
+/.utmp
+*.DISABLED
+Assets/Plugins/Android/AndroidManifest.xml.DISABLED.meta
