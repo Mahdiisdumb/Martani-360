@@ -20,3 +20,5 @@ This is **not a finished product**. It’s a work‑in‑progress VR game protot
 - basic combat interactions  
 
 It’s meant to be a **fun sandbox project**, not a commercial release.
+Or **Is** it?
+Yea thats RIGHT im not even finished yet this readme was created a fucking while ago! AHA! meaning soon this may be commercial!
