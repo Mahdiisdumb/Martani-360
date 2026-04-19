@@ -417,15 +417,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 658498974631554865, guid: 9768615f1e760a34fba7185414e5e69d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 49.06
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 658498974631554865, guid: 9768615f1e760a34fba7185414e5e69d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 44.08
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 658498974631554865, guid: 9768615f1e760a34fba7185414e5e69d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 226.23
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 658498974631554865, guid: 9768615f1e760a34fba7185414e5e69d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1153,6 +1153,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -2883,15 +2884,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 430285557273465591, guid: ce5c2251d70caf148bbad13bb99ebf54, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 56.304
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 430285557273465591, guid: ce5c2251d70caf148bbad13bb99ebf54, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 44.964
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 430285557273465591, guid: ce5c2251d70caf148bbad13bb99ebf54, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 227.348
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 430285557273465591, guid: ce5c2251d70caf148bbad13bb99ebf54, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3198,6 +3199,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0

@@ -1969,8 +1969,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 800420135355101930}
-  - component: {fileID: 817390700366515671}
   - component: {fileID: 3787198636592975617}
+  - component: {fileID: 7092157608239487984}
   m_Layer: 0
   m_Name: NullMovPlr
   m_TagString: Untagged
@@ -1996,41 +1996,6 @@ Transform:
   - {fileID: 5384595571355856253}
   m_Father: {fileID: 7952803311302659427}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &817390700366515671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4332247893867899828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a18dcb4be0dacd14f9bb6fd32d26e078, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  headCollider: {fileID: 6749255891492550677}
-  bodyCollider: {fileID: 1607850564467153045}
-  leftHandFollower: {fileID: 5813182627566381976}
-  rightHandFollower: {fileID: 4277902675922244529}
-  rightHandTransform: {fileID: 5384595571355856253}
-  leftHandTransform: {fileID: 5246967283430042638}
-  velocityHistorySize: 8
-  maxArmLength: 1.5
-  unStickDistance: 1
-  velocityLimit: 0.4
-  maxJumpSpeed: 6.5
-  jumpMultiplier: 1.1
-  minimumRaycastDistance: 0.05
-  defaultSlideFactor: 0.03
-  defaultPrecision: 0.995
-  rightHandOffset: {x: 0, y: 0, z: 0}
-  leftHandOffset: {x: 0, y: 0, z: 0}
-  locomotionEnabledLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  wasLeftHandTouching: 0
-  wasRightHandTouching: 0
-  disableMovement: 1
 --- !u!54 &3787198636592975617
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2058,6 +2023,21 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 3
+--- !u!114 &7092157608239487984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4332247893867899828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe7c89a891fd8f7489a575abc4210eec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContinuousFreeCam
+  speed: 5
+  useCameraForward: 1
+  allowVerticalLook: 1
 --- !u!1 &5523718275186019370
 GameObject:
   m_ObjectHideFlags: 0

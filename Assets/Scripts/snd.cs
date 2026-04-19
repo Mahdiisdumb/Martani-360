@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+
 public class SoundTestManager : MonoBehaviour
 {
     [Header("Audio List (fill this in inspector)")]
     public List<AudioClip> clips = new List<AudioClip>();
     public TextMeshProUGUI label;
+    public TextMeshProUGUI label2;
 
     private List<string> labels = new List<string>();
     private AudioSource source;
@@ -15,6 +17,7 @@ public class SoundTestManager : MonoBehaviour
     {
         source = gameObject.AddComponent<AudioSource>();
         GenerateLabels();
+        UpdateUI();
     }
 
     void GenerateLabels()
@@ -71,6 +74,8 @@ public class SoundTestManager : MonoBehaviour
         source.clip = clips[index];
         source.Play();
 
+        UpdateUI();
+
         Debug.Log($"Playing: {labels[index]} - {clips[index].name}");
     }
 
@@ -85,8 +90,17 @@ public class SoundTestManager : MonoBehaviour
         if (labels.Count == 0) return "--";
         return labels[index];
     }
-    void Update()
+
+    void UpdateUI()
     {
-        label.text = GetCurrentLabel();
+        if (labels.Count > 0)
+            label.text = GetCurrentLabel();
+        else
+            label.text = "--";
+
+        if (clips.Count > 0 && clips[index] != null)
+            label2.text = clips[index].name;
+        else
+            label2.text = "--";
     }
 }
