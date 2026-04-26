@@ -154,7 +154,7 @@ void HandleClick(int x, int y)
         ShellExecuteW(
             NULL,
             L"open",
-            L".\\Windows\\Martani-360.exe",
+            L".\\Windows\\Martani 360.exe",
             NULL,
             NULL,
             SW_SHOW
