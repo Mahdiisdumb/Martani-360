@@ -7,3 +7,4 @@
 /.utmp
 *.DISABLED
 Assets/Plugins/Android/AndroidManifest.xml.DISABLED.meta
+/Rel
