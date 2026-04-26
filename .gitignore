@@ -8,3 +8,6 @@
 *.DISABLED
 Assets/Plugins/Android/AndroidManifest.xml.DISABLED.meta
 /Rel
+/Martani-360-Installer/.vs
+/Martani-360-Installer/Martani-.51d4cf53
+/Martani-360-Installer/x64

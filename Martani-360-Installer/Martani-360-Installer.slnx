@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Martani-360-Installer.vcxproj" Id="51d4cf53-32c6-49fb-89cd-b16411ff5b14" />
+</Solution>
