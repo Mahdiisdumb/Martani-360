@@ -1621,6 +1621,9 @@
 #define PWR_FAIL                        -1
 #define UNICODE_NOCHAR                  0xFFFF
 #define HTTRANSPARENT                   -1
+#define IDR_ADB_EXE    200
+#define IDR_ADB_DLL1   201
+#define IDR_ADB_DLL2   202
 
 // Next default values for new objects
 // 

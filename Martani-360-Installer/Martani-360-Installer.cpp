@@ -1,71 +1,114 @@
 #include "framework.h"
-
 #include <windows.h>
 #include <winhttp.h>
+#include <wininet.h>
 #include <shellapi.h>
+#include <commctrl.h>
 #include <string>
 #include <thread>
 #include <fstream>
 
 #pragma comment(lib, "winhttp.lib")
 #pragma comment(lib, "shell32.lib")
+#pragma comment(lib, "wininet.lib")
+#pragma comment(lib, "comctl32.lib")
+
+// ---------------- RESOURCE IDS ----------------
+#include "resource.h"
 
 // ---------------- STATE ----------------
 HINSTANCE hInst;
 HWND hWndMain;
+HWND hProgress;
 
 std::wstring statusText = L"Idle";
 bool windowsInstalled = false;
+
+double downloadCurrentMB = 0;
+double downloadTotalMB = 0;
+
+std::wstring QUEST_PACKAGE = L"com.MahdiStudios.Martani360";
 
 // ---------------- APPS ----------------
 struct AppStep {
     std::wstring name;
     std::wstring url;
     std::wstring output;
-    std::wstring action;
 };
 
 AppStep questApp = {
     L"Quest",
     L"https://github.com/mahdiisdumb/martani-360/releases/latest/download/Quest.apk",
-    L"Quest.apk",
-    L"adb"
+    L"Quest.apk"
 };
 
 AppStep windowsApp = {
     L"Windows",
     L"https://github.com/mahdiisdumb/martani-360/releases/latest/download/Windows.zip",
-    L"Windows.zip",
-    L"extract"
+    L"Windows.zip"
 };
 
-// ---------------- STATUS ----------------
+// ---------------- UI ----------------
 void SetStatus(const std::wstring& s)
 {
     statusText = s;
     InvalidateRect(hWndMain, NULL, TRUE);
 }
 
-// ---------------- FILE CHECK ----------------
+void SetProgress(int p)
+{
+    SendMessage(hProgress, PBM_SETPOS, p, 0);
+}
+
+// ---------------- FILE ----------------
 bool FileExists(const wchar_t* path)
 {
     return GetFileAttributesW(path) != INVALID_FILE_ATTRIBUTES;
 }
 
-// ---------------- LOAD WINDOWS STATE ONLY ----------------
 void LoadWindowsState()
 {
     windowsInstalled = FileExists(L".\\Windows\\installed.flag");
 }
 
-// ---------------- SAVE WINDOWS STATE ----------------
 void SaveWindowsState()
 {
     std::ofstream f(".\\Windows\\installed.flag");
     f << "1";
-    f.close();
-
     windowsInstalled = true;
+}
+
+// ---------------- EMBEDDED ADB EXTRACTION ----------------
+bool ExtractResource(int id, const wchar_t* outPath)
+{
+    HRSRC res = FindResourceW(NULL, MAKEINTRESOURCEW(id), L"BINARY");
+    if (!res) return false;
+
+    HGLOBAL loaded = LoadResource(NULL, res);
+    if (!loaded) return false;
+
+    DWORD size = SizeofResource(NULL, res);
+    void* data = LockResource(loaded);
+
+    std::ofstream file(outPath, std::ios::binary);
+    file.write((char*)data, size);
+    return true;
+}
+
+bool EnsureADB()
+{
+    system("mkdir tools\\adb");
+
+    if (!FileExists(L".\\tools\\adb\\adb.exe"))
+    {
+        SetStatus(L"Extracting ADB...");
+
+        ExtractResource(IDR_ADB_EXE, L".\\tools\\adb\\adb.exe");
+        ExtractResource(IDR_ADB_DLL1, L".\\tools\\adb\\AdbWinApi.dll");
+        ExtractResource(IDR_ADB_DLL2, L".\\tools\\adb\\AdbWinUsbApi.dll");
+    }
+
+    return FileExists(L".\\tools\\adb\\adb.exe");
 }
 
 // ---------------- ADB ----------------
@@ -92,49 +135,107 @@ bool RunADB(const std::wstring& args)
     return code == 0;
 }
 
+void ForceReplacePackage(const std::wstring& package)
+{
+    RunADB(L"uninstall " + package);
+}
+
 // ---------------- DOWNLOAD ----------------
 bool DownloadFile(const std::wstring& url, const std::wstring& out)
 {
-    std::wstring cmd =
-        L"powershell -Command Invoke-WebRequest -Uri \"" +
-        url + L"\" -OutFile \"" + out + L"\"";
+    HINTERNET hInternet = InternetOpenW(L"Downloader", INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, 0);
+    if (!hInternet) return false;
 
-    return _wsystem(cmd.c_str()) == 0;
+    HINTERNET hFile = InternetOpenUrlW(hInternet, url.c_str(), NULL, 0,
+        INTERNET_FLAG_RELOAD | INTERNET_FLAG_NO_CACHE_WRITE, 0);
+
+    if (!hFile)
+    {
+        InternetCloseHandle(hInternet);
+        return false;
+    }
+
+    std::ofstream file(out, std::ios::binary);
+
+    DWORD contentLength = 0;
+    DWORD lenSize = sizeof(contentLength);
+
+    HttpQueryInfoW(hFile,
+        HTTP_QUERY_CONTENT_LENGTH | HTTP_QUERY_FLAG_NUMBER,
+        &contentLength, &lenSize, NULL);
+
+    downloadTotalMB = contentLength / 1024.0 / 1024.0;
+
+    char buffer[8192];
+    DWORD bytesRead = 0;
+    DWORD totalRead = 0;
+
+    while (InternetReadFile(hFile, buffer, sizeof(buffer), &bytesRead) && bytesRead)
+    {
+        file.write(buffer, bytesRead);
+        totalRead += bytesRead;
+
+        downloadCurrentMB = totalRead / 1024.0 / 1024.0;
+
+        int percent = contentLength > 0
+            ? (int)((double)totalRead / contentLength * 100.0)
+            : 0;
+
+        SetProgress(percent);
+        InvalidateRect(hWndMain, NULL, TRUE);
+    }
+
+    file.close();
+    InternetCloseHandle(hFile);
+    InternetCloseHandle(hInternet);
+
+    return true;
 }
 
-// ---------------- INSTALL QUEST (NO JSON NEEDED) ----------------
+// ---------------- INSTALL QUEST ----------------
 void InstallQuest()
 {
+    SetProgress(0);
     SetStatus(L"Downloading Quest...");
 
     DownloadFile(questApp.url, questApp.output);
 
     SetStatus(L"Waiting ADB...");
+    EnsureADB();
     RunADB(L"wait-for-device");
+    SetProgress(40);
 
-    SetStatus(L"Installing Quest APK...");
-    RunADB(L"install -r Quest.apk");
+    SetStatus(L"Removing old version...");
+    ForceReplacePackage(QUEST_PACKAGE);
+    SetProgress(60);
+
+    SetStatus(L"Installing APK...");
+    RunADB(L"install -r -d -g Quest.apk");
+    SetProgress(100);
 
     SetStatus(L"Quest installed");
 }
 
-// ---------------- INSTALL WINDOWS (TRACKED) ----------------
+// ---------------- INSTALL WINDOWS ----------------
 void InstallWindows()
 {
+    SetProgress(0);
     SetStatus(L"Downloading Windows...");
 
     DownloadFile(windowsApp.url, windowsApp.output);
 
+    SetProgress(60);
     SetStatus(L"Extracting...");
 
     system("powershell Expand-Archive -Force Windows.zip .\\Windows");
 
     SaveWindowsState();
 
+    SetProgress(100);
     SetStatus(L"Windows installed");
 }
 
-// ---------------- CLICK HANDLER ----------------
+// ---------------- CLICK ----------------
 void HandleClick(int x, int y)
 {
     POINT p = { x, y };
@@ -151,14 +252,9 @@ void HandleClick(int x, int y)
 
     if (windowsInstalled && PtInRect(&launch, p))
     {
-        ShellExecuteW(
-            NULL,
-            L"open",
+        ShellExecuteW(NULL, L"open",
             L".\\Windows\\Martani 360.exe",
-            NULL,
-            NULL,
-            SW_SHOW
-        );
+            NULL, NULL, SW_SHOW);
     }
 }
 
@@ -188,35 +284,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
         TextOutW(hdc, 20, 20, L"Martani Launcher", 17);
 
-        // QUEST CARD
-        RECT quest = { 60, 80, 460, 170 };
-        HBRUSH c1 = CreateSolidBrush(RGB(30, 30, 30));
-        FillRect(hdc, &quest, c1);
-        DeleteObject(c1);
-        TextOutW(hdc, 80, 120, L"Install Quest APK", 18);
-
-        // WINDOWS CARD
-        RECT windows = { 60, 190, 460, 280 };
-        HBRUSH c2 = CreateSolidBrush(RGB(30, 30, 30));
-        FillRect(hdc, &windows, c2);
-        DeleteObject(c2);
-        TextOutW(hdc, 80, 230, L"Install Windows", 16);
-
-        // LAUNCH BUTTON (ONLY IF WINDOWS INSTALLED)
-        if (windowsInstalled)
-        {
-            RECT launch = { 60, 300, 460, 360 };
-
-            HBRUSH lb = CreateSolidBrush(RGB(0, 80, 0));
-            FillRect(hdc, &launch, lb);
-            DeleteObject(lb);
-
-            TextOutW(hdc, 170, 325, L"Launch Martani-360", 19);
-        }
-
-        // STATUS
-        TextOutW(hdc, 60, 420, statusText.c_str(), (int)statusText.size());
-
         EndPaint(hWnd, &ps);
     }
     break;
@@ -239,6 +306,11 @@ int APIENTRY wWinMain(HINSTANCE hInstance,
 
     LoadWindowsState();
 
+    INITCOMMONCONTROLSEX icc{};
+    icc.dwSize = sizeof(icc);
+    icc.dwICC = ICC_PROGRESS_CLASS;
+    InitCommonControlsEx(&icc);
+
     WNDCLASS wc{};
     wc.lpfnWndProc = WndProc;
     wc.hInstance = hInstance;
@@ -247,15 +319,22 @@ int APIENTRY wWinMain(HINSTANCE hInstance,
 
     RegisterClass(&wc);
 
-    hWndMain = CreateWindowW(
-        wc.lpszClassName,
+    hWndMain = CreateWindowW(wc.lpszClassName,
         L"Martani Launcher",
         WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, CW_USEDEFAULT,
-        520, 480,
+        520, 520,
         NULL, NULL,
-        hInstance, NULL
-    );
+        hInstance, NULL);
+
+    hProgress = CreateWindowExW(0, PROGRESS_CLASSW, NULL,
+        WS_CHILD | WS_VISIBLE,
+        60, 420, 400, 20,
+        hWndMain, NULL, hInstance, NULL);
+
+    SendMessage(hProgress, PBM_SETRANGE, 0, MAKELPARAM(0, 100));
+
+    EnsureADB();
 
     ShowWindow(hWndMain, nCmdShow);
     UpdateWindow(hWndMain);
