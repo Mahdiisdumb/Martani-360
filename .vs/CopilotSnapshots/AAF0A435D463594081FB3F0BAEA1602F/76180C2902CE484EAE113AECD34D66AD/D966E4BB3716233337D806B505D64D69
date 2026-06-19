@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <windows.h>
 #include <winhttp.h>
 #include <wininet.h>
@@ -7,7 +7,6 @@
 #include <string>
 #include <thread>
 #include <fstream>
-#include <cstdio>
 
 #pragma comment(lib, "winhttp.lib")
 #pragma comment(lib, "shell32.lib")
@@ -22,7 +21,6 @@ HWND hWndMain;
 HWND hProgress;
 
 std::wstring statusText = L"Idle";
-std::wstring errorText = L"";
 bool windowsInstalled = false;
 
 double downloadCurrentMB = 0;
@@ -57,14 +55,6 @@ RECT rLaunch = { 60, 300, 460, 360 };
 void SetStatus(const std::wstring& s)
 {
     statusText = s;
-    errorText = L""; // Clear error when setting new status
-    InvalidateRect(hWndMain, NULL, FALSE);
-}
-
-void SetError(const std::wstring& e)
-{
-    errorText = e;
-    InvalidateRect(hWndMain, NULL, FALSE);
 }
 
 void SetProgress(int p)
@@ -88,35 +78,6 @@ void SaveWindowsState()
     std::ofstream f(".\\Windows\\installed.flag");
     f << "1";
     windowsInstalled = true;
-}
-
-// ---------------- ADB HELPERS ----------------
-bool IsAdbAvailable()
-{
-    // Try to run adb version to check if ADB is available
-    int result = system("adb version >nul 2>&1");
-    return result == 0;
-}
-
-bool CheckAdbPermission()
-{
-    // Try to list devices - if ADB is not allowed, this will fail
-    int result = system("adb devices >nul 2>&1");
-    return result == 0;
-}
-
-bool InstallAPK(const std::wstring& apkPath)
-{
-    // Convert wide string to regular string for system command
-    char command[512];
-    size_t convertedChars = 0;
-    wcstombs_s(&convertedChars, command, 512, apkPath.c_str(), 512);
-
-    char fullCommand[1024];
-    sprintf_s(fullCommand, "adb install -r \"%s\"", command);
-
-    int result = system(fullCommand);
-    return result == 0;
 }
 
 // ---------------- DRAW ----------------
@@ -189,41 +150,9 @@ void HandleClick(int x, int y)
 
     if (PtInRect(&rQuest, p))
         std::thread([] {
-        SetStatus(L"Checking ADB...");
-
-        // Check if ADB is available
-        if (!IsAdbAvailable())
-        {
-            SetError(L"Error: ADB not found. Please install Android SDK Platform Tools.");
-            SetStatus(L"Failed to install Quest");
-            return;
-        }
-
-        // Check if ADB has permission to access devices
-        if (!CheckAdbPermission())
-        {
-            SetError(L"Error: Allow ADB debugging. Enable USB debugging on your Android device.");
-            SetStatus(L"Failed to install Quest");
-            return;
-        }
-
         SetStatus(L"Downloading Quest...");
-        if (!DownloadFile(questApp.url, questApp.output))
-        {
-            SetError(L"Error: Failed to download Quest APK");
-            SetStatus(L"Failed");
-            return;
-        }
-
-        SetStatus(L"Installing Quest via ADB...");
-        if (!InstallAPK(questApp.output))
-        {
-            SetError(L"Error: Failed to install Quest APK. Check device connection and ADB permissions.");
-            SetStatus(L"Failed");
-            return;
-        }
-
-        SetStatus(L"Done (Quest installed successfully)");
+        DownloadFile(questApp.url, questApp.output);
+        SetStatus(L"Done (Quest)");
             }).detach();
 
     if (PtInRect(&rWindows, p))
@@ -279,13 +208,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
         TextOutW(memDC, 20, 20, L"Martani Launcher", 17);
         TextOutW(memDC, 20, 45, statusText.c_str(), (int)statusText.size());
-
-        // Draw error message if present
-        if (!errorText.empty())
-        {
-            SetTextColor(memDC, RGB(255, 100, 100)); // Red for errors
-            TextOutW(memDC, 20, 70, errorText.c_str(), (int)errorText.size());
-        }
 
         DrawButton(memDC, rQuest, L"Install Quest");
         DrawButton(memDC, rWindows, L"Install Windows");

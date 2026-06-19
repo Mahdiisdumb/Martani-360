@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <windows.h>
 #include <winhttp.h>
 #include <wininet.h>
@@ -7,7 +7,6 @@
 #include <string>
 #include <thread>
 #include <fstream>
-#include <cstdio>
 
 #pragma comment(lib, "winhttp.lib")
 #pragma comment(lib, "shell32.lib")
@@ -58,13 +57,11 @@ void SetStatus(const std::wstring& s)
 {
     statusText = s;
     errorText = L""; // Clear error when setting new status
-    InvalidateRect(hWndMain, NULL, FALSE);
 }
 
 void SetError(const std::wstring& e)
 {
     errorText = e;
-    InvalidateRect(hWndMain, NULL, FALSE);
 }
 
 void SetProgress(int p)
