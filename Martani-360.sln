@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotonVoice.API", "PhotonVo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotonUnityNetworking", "PhotonUnityNetworking.csproj", "{9e615a5e-2962-482b-7cb3-f5cdb3de2b2e}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.XR.Content.Interaction", "Unity.XR.Content.Interaction.csproj", "{c2c0b576-5de2-de37-3007-493e546c89cd}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotonUnityNetworking.Demos", "PhotonUnityNetworking.Demos.csproj", "{4e5884ab-f200-21c4-4687-1a53c933a166}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{a6c218e6-8be9-a8cd-5932-5926c62b86d5}"
@@ -26,8 +24,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{04eb03ea-e236-5873-271e-bc02c3e22ee1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PunDemos.DemoHubEditor", "PunDemos.DemoHubEditor.csproj", "{b87ffd6b-8f81-7c3a-6ff3-7394cc2ee673}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.XR.Content.Interaction.Analytics", "Unity.XR.Content.Interaction.Analytics.csproj", "{fd1e7ec1-b7a2-922f-2e43-6d7b6936e31a}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotonUnityNetworking.Editor", "PhotonUnityNetworking.Editor.csproj", "{8ca9c6c7-d5f5-aaa6-1bb5-e9b2710d4f0f}"
 EndProject
@@ -51,8 +47,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotonUnityNetworking.Utili
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Voice.FMOD.Editor", "Voice.FMOD.Editor.csproj", "{841f96c3-f093-92ca-fc95-b9540dccd65c}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discord.Sdk", "Discord.Sdk.csproj", "{f2526ad7-8ce7-15cd-04e3-a18ba36c9a44}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.XR.Interaction.Toolkit.Samples.StarterAssets.Editor", "Unity.XR.Interaction.Toolkit.Samples.StarterAssets.Editor.csproj", "{35ba04d8-3bac-6c13-bc5c-2431e72fa1f5}"
 EndProject
 Global
@@ -66,8 +60,6 @@ Global
 		{194075d7-e67b-33e0-1dd4-9ea8e8e588b2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9e615a5e-2962-482b-7cb3-f5cdb3de2b2e}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9e615a5e-2962-482b-7cb3-f5cdb3de2b2e}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{c2c0b576-5de2-de37-3007-493e546c89cd}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{c2c0b576-5de2-de37-3007-493e546c89cd}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4e5884ab-f200-21c4-4687-1a53c933a166}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4e5884ab-f200-21c4-4687-1a53c933a166}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{a6c218e6-8be9-a8cd-5932-5926c62b86d5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -86,8 +78,6 @@ Global
 		{04eb03ea-e236-5873-271e-bc02c3e22ee1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{b87ffd6b-8f81-7c3a-6ff3-7394cc2ee673}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{b87ffd6b-8f81-7c3a-6ff3-7394cc2ee673}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{fd1e7ec1-b7a2-922f-2e43-6d7b6936e31a}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{fd1e7ec1-b7a2-922f-2e43-6d7b6936e31a}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8ca9c6c7-d5f5-aaa6-1bb5-e9b2710d4f0f}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8ca9c6c7-d5f5-aaa6-1bb5-e9b2710d4f0f}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51cea311-c04e-be9e-63cc-37354e87798a}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -110,8 +100,6 @@ Global
 		{82b725e8-c05b-3d78-33e3-0b4fa3659f85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{841f96c3-f093-92ca-fc95-b9540dccd65c}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{841f96c3-f093-92ca-fc95-b9540dccd65c}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{f2526ad7-8ce7-15cd-04e3-a18ba36c9a44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{f2526ad7-8ce7-15cd-04e3-a18ba36c9a44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35ba04d8-3bac-6c13-bc5c-2431e72fa1f5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{35ba04d8-3bac-6c13-bc5c-2431e72fa1f5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
