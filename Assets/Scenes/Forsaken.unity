@@ -1377,6 +1377,7 @@ MonoBehaviour:
   m_TrackedScrollDeltaMultiplier: 5
   m_NonTrackedScrollDeltaMultiplier: 6
   m_BypassUIToolkitEvents: 0
+  m_PrioritizeDistanceSorting: 0
   m_ActiveInputMode: 0
   m_EnableXRInput: 1
   m_EnableMouseInput: 1
@@ -1678,7 +1679,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: d7e10259c1b3fed438639f5466656719, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12940,7 +12941,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GorillaPlayer: {fileID: 1471516735}
   ObjectsToDisable: []
-  TeleportLocation: {fileID: 0}
+  TeleportLocation: {fileID: 2903685253139049411}
   WaitTime: 0
   TeleportOverlay: {fileID: 1909490441}
   TeleportSound: {fileID: 96722086}
@@ -14462,7 +14463,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: d7e10259c1b3fed438639f5466656719, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -23705,7 +23706,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GorillaPlayer: {fileID: 1471516735}
   ObjectsToDisable: []
-  TeleportLocation: {fileID: 0}
+  TeleportLocation: {fileID: 2903685253139049411}
   WaitTime: 0
   TeleportOverlay: {fileID: 1909490441}
   TeleportSound: {fileID: 96722086}
@@ -25145,7 +25146,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: d7e10259c1b3fed438639f5466656719, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -27281,6 +27282,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 9768615f1e760a34fba7185414e5e69d, type: 3}
+--- !u!4 &2903685253139049411 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 658498974631554865, guid: 9768615f1e760a34fba7185414e5e69d, type: 3}
+  m_PrefabInstance: {fileID: 2903685253139049410}
+  m_PrefabAsset: {fileID: 0}
 --- !u!23 &2922529680085543342
 MeshRenderer:
   m_ObjectHideFlags: 0
