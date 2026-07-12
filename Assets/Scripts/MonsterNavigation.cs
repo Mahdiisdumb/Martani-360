@@ -1,152 +1,393 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Photon.Pun;
 
 public class MonsterNavigation : MonoBehaviour
 {
+    [Header("Detection")]
     public float DetectionRange = 5f;
+    public string tagString = "Player";
+
+    [Header("Movement")]
     public float MonsterSpeedWander = 5f;
-    public float MonsterSpeedChase = 7.5f;
+    public float MonsterSpeedChase = 12f;
+    public float ChasePrediction = 0.5f;
+
     public NavMeshAgent agent;
     public Transform[] points;
-    public string tagString = "Player";
+
+
+    [Header("Audio")]
     public AudioClip ChaseMusic;
     public AudioClip WanderMusic;
     public AudioClip TransitionBeforeChase;
-    public AudioSource audioSource;
 
-    private enum MonsterState { Wander, Transitioning, Chase }
-    private MonsterState currentState = MonsterState.Wander;
+    public float MusicFadeTime = 2f;
+
+
+    private AudioSource musicA;
+    private AudioSource musicB;
+
+    private AudioSource activeMusic;
+    private AudioSource fadingMusic;
+
+    private Coroutine fadeRoutine;
     private Coroutine transitionRoutine;
+
+
+    private enum MonsterState
+    {
+        Wander,
+        Transitioning,
+        Chase
+    }
+
+    private MonsterState currentState = MonsterState.Wander;
+
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+
+        // Better high-speed monster movement
         agent.speed = MonsterSpeedWander;
+        agent.acceleration = 200f;
+        agent.angularSpeed = 1200f;
+        agent.autoBraking = false;
+        agent.stoppingDistance = 1f;
+
+
+        SetupAudio();
+
+
+        StartCoroutine(InitializeMonster());
+    }
+
+
+    IEnumerator InitializeMonster()
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        PlaceOnNavMesh();
+
         Wander();
 
-        // Kick off wander music immediately.
-        PlayMusic(WanderMusic, true);
+        CrossFadeMusic(WanderMusic, true);
     }
+
+
+
+    void SetupAudio()
+    {
+        musicA = gameObject.AddComponent<AudioSource>();
+        musicB = gameObject.AddComponent<AudioSource>();
+
+        ConfigureAudio(musicA);
+        ConfigureAudio(musicB);
+
+        activeMusic = musicA;
+        fadingMusic = musicB;
+    }
+
+
+    void ConfigureAudio(AudioSource source)
+    {
+        source.loop = true;
+        source.playOnAwake = false;
+        source.volume = 0;
+        source.spatialBlend = 0;
+    }
+
+
 
     void Update()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            if (agent.enabled)
+                agent.enabled = false;
+
+            return;
+        }
+
+
+        if (!agent.enabled)
         {
             agent.enabled = true;
-            GameObject[] players = GameObject.FindGameObjectsWithTag(tagString);
+        }
 
-            GameObject target = null;
 
-            // Set the target to the closest player within range
-            if (players.Length > 0)
+        if (!agent.isOnNavMesh)
+        {
+            PlaceOnNavMesh();
+            return;
+        }
+
+
+
+        GameObject[] players =
+            GameObject.FindGameObjectsWithTag(tagString);
+
+
+        GameObject target = null;
+        float closestDistance = Mathf.Infinity;
+
+
+
+        foreach (GameObject player in players)
+        {
+            float distance =
+                Vector3.Distance(
+                    transform.position,
+                    player.transform.position
+                );
+
+
+            if (distance < DetectionRange &&
+               distance < closestDistance)
             {
-                float minDistance = float.MaxValue;
-                foreach (GameObject player in players)
-                {
-                    float distance = Vector3.Distance(transform.position, player.transform.position);
-                    if (distance < DetectionRange && distance < minDistance)
-                    {
-                        minDistance = distance;
-                        target = player;
-                    }
-                }
+                closestDistance = distance;
+                target = player;
             }
+        }
 
-            if (target != null)
+
+
+        if (target != null)
+        {
+            agent.speed = MonsterSpeedChase;
+
+            Chase(target.transform);
+
+
+            if (currentState == MonsterState.Wander)
             {
-                agent.speed = MonsterSpeedChase;
-                Chase(target.transform);
-                if (currentState == MonsterState.Wander)
-                {
-                    BeginChaseSequence();
-                }
-            }
-            else
-            {
-                if (!agent.pathPending && agent.remainingDistance < 0.5f)
-                {
-                    agent.speed = MonsterSpeedWander;
-                    Wander();
-                }
-                if (currentState != MonsterState.Wander)
-                {
-                    BackToWander();
-                }
+                BeginChaseSequence();
             }
         }
         else
         {
-            agent.enabled = false;
+            agent.speed = MonsterSpeedWander;
+
+
+            if (!agent.pathPending &&
+               agent.remainingDistance <= 0.5f)
+            {
+                Wander();
+            }
+
+
+            if (currentState != MonsterState.Wander)
+            {
+                BackToWander();
+            }
         }
     }
 
+
+
     void Chase(Transform target)
     {
-        agent.destination = target.position;
+        Vector3 velocity = Vector3.zero;
+
+        Rigidbody rb =
+            target.GetComponent<Rigidbody>();
+
+        if (rb != null)
+        {
+            velocity = rb.linearVelocity;
+        }
+
+
+        Vector3 predicted =
+            target.position +
+            velocity * ChasePrediction;
+
+
+        agent.SetDestination(predicted);
     }
+
+
 
     void Wander()
     {
         if (points.Length == 0)
             return;
 
-        int destPoint = Random.Range(0, points.Length);
-        agent.destination = points[destPoint].position;
+
+        int point =
+            Random.Range(0, points.Length);
+
+
+        agent.SetDestination(
+            points[point].position
+        );
     }
+
+
 
     void BeginChaseSequence()
     {
-        currentState = MonsterState.Transitioning;
+        currentState =
+            MonsterState.Transitioning;
+
 
         if (transitionRoutine != null)
             StopCoroutine(transitionRoutine);
 
-        transitionRoutine = StartCoroutine(TransitionToChaseRoutine());
+
+        transitionRoutine =
+            StartCoroutine(
+                ChaseTransition()
+            );
     }
 
-    IEnumerator TransitionToChaseRoutine()
+
+
+    IEnumerator ChaseTransition()
     {
         if (TransitionBeforeChase != null)
         {
-            PlayMusic(TransitionBeforeChase, false);
-            yield return new WaitForSeconds(TransitionBeforeChase.length);
+            CrossFadeMusic(
+                TransitionBeforeChase,
+                false
+            );
+
+            yield return new WaitForSeconds(
+                TransitionBeforeChase.length
+            );
         }
 
-        currentState = MonsterState.Chase;
-        PlayMusic(ChaseMusic, true);
-        transitionRoutine = null;
+
+        currentState =
+            MonsterState.Chase;
+
+
+        CrossFadeMusic(
+            ChaseMusic,
+            true
+        );
     }
+
+
 
     void BackToWander()
     {
         if (transitionRoutine != null)
         {
             StopCoroutine(transitionRoutine);
-            transitionRoutine = null;
         }
 
-        currentState = MonsterState.Wander;
-        PlayMusic(WanderMusic, true);
+
+        currentState =
+            MonsterState.Wander;
+
+
+        CrossFadeMusic(
+            WanderMusic,
+            true
+        );
     }
 
-    void PlayMusic(AudioClip clip, bool loop)
+
+
+    void CrossFadeMusic(AudioClip clip, bool loop)
     {
-        if (audioSource == null || clip == null)
-            return;
-        if (audioSource.clip == clip && audioSource.isPlaying)
+        if (clip == null)
             return;
 
-        audioSource.clip = clip;
-        audioSource.loop = loop;
-        audioSource.Play();
+
+        if (fadeRoutine != null)
+            StopCoroutine(fadeRoutine);
+
+
+        fadeRoutine =
+            StartCoroutine(
+                FadeMusic(clip, loop)
+            );
     }
+
+
+
+    IEnumerator FadeMusic(AudioClip clip, bool loop)
+    {
+        fadingMusic = activeMusic;
+
+        activeMusic =
+            activeMusic == musicA
+            ? musicB
+            : musicA;
+
+
+        activeMusic.clip = clip;
+        activeMusic.loop = loop;
+        activeMusic.volume = 0;
+
+        activeMusic.Play();
+
+
+        float timer = 0;
+
+
+        while (timer < MusicFadeTime)
+        {
+            timer += Time.deltaTime;
+
+            float t =
+                timer / MusicFadeTime;
+
+
+            activeMusic.volume =
+                Mathf.Lerp(0, 1, t);
+
+
+            fadingMusic.volume =
+                Mathf.Lerp(1, 0, t);
+
+
+            yield return null;
+        }
+
+
+        activeMusic.volume = 1;
+
+        fadingMusic.Stop();
+        fadingMusic.volume = 0;
+    }
+
+
+
+    void PlaceOnNavMesh()
+    {
+        NavMeshHit hit;
+
+
+        if (NavMesh.SamplePosition(
+            transform.position,
+            out hit,
+            5f,
+            NavMesh.AllAreas))
+        {
+            agent.Warp(hit.position);
+        }
+        else
+        {
+            Debug.LogError(
+                "Monster cannot find NavMesh!"
+            );
+        }
+    }
+
+
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, DetectionRange);
+
+        Gizmos.DrawWireSphere(
+            transform.position,
+            DetectionRange
+        );
     }
 }

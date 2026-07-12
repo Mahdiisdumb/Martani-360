@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections.Generic;
+using System.Collections;
 
 public class RadiusAudioTriggerForHorror : MonoBehaviour
 {
@@ -9,101 +9,213 @@ public class RadiusAudioTriggerForHorror : MonoBehaviour
     public float zoneSize = 10f;
 
     [Header("Horror Audio Zones")]
-    public AudioSource farAudio;     // Ambient rustle / unease
-    public AudioSource closeAudio;   // Whisper textures / static
-    public AudioSource closerAudio;  // Drone distortions / proximity warnings
-    public AudioSource chaseAudio;   // Panic heartbeat / aggression
+    public AudioClip farAudio;
+    public AudioClip closeAudio;
+    public AudioClip closerAudio;
+    public AudioClip chaseAudio;
 
-    private AudioSource[] allAudio;
-    private bool playerInside = false;
+    [Header("Crossfade Settings")]
+    public float fadeTime = 2f;
+    public float maxVolume = 1f;
+
+    private AudioClip[] allAudio;
+
+    private AudioSource sourceA;
+    private AudioSource sourceB;
+
+    private AudioSource activeSource;
+    private AudioSource fadingSource;
+
+    private int currentZone = -1;
+    private Coroutine fadeRoutine;
+
 
     void Start()
     {
-        allAudio = new AudioSource[] { farAudio, closeAudio, closerAudio, chaseAudio };
+        allAudio = new AudioClip[]
+        {
+            chaseAudio,
+            closerAudio,
+            closeAudio,
+            farAudio
+        };
+
+
+        sourceA = gameObject.AddComponent<AudioSource>();
+        sourceB = gameObject.AddComponent<AudioSource>();
+
+        SetupSource(sourceA);
+        SetupSource(sourceB);
+
+        activeSource = sourceA;
+        fadingSource = sourceB;
     }
+
+
+    void SetupSource(AudioSource source)
+    {
+        source.loop = true;
+        source.playOnAwake = false;
+        source.volume = 0;
+        source.spatialBlend = 1f; // 3D sound
+    }
+
 
     void Update()
     {
         GameObject[] targets = GameObject.FindGameObjectsWithTag(targetTag);
-        bool anyInside = false;
+
+        bool foundPlayer = false;
 
         foreach (GameObject target in targets)
         {
-            float distance = Vector3.Distance(centerPoint.position, target.transform.position);
+            float distance = Vector3.Distance(
+                centerPoint.position,
+                target.transform.position
+            );
+
 
             if (distance <= zoneSize * allAudio.Length)
             {
-                anyInside = true;
+                foundPlayer = true;
+
                 int zoneIndex = Mathf.FloorToInt(distance / zoneSize);
                 zoneIndex = Mathf.Clamp(zoneIndex, 0, allAudio.Length - 1);
 
-                if (!playerInside)
+
+                if (zoneIndex != currentZone)
                 {
-                    playerInside = true;
-                    TriggerZoneAudio(zoneIndex);
+                    currentZone = zoneIndex;
+                    ChangeAudio(zoneIndex);
                 }
-                else
-                {
-                    TriggerZoneAudio(zoneIndex);
-                }
-                break; // Only handle the first player inside
+
+                break;
             }
         }
 
-        if (!anyInside && playerInside)
+
+        if (!foundPlayer && currentZone != -1)
         {
-            playerInside = false;
-            StopAllAudio();
+            currentZone = -1;
+
+            if (fadeRoutine != null)
+                StopCoroutine(fadeRoutine);
+
+            fadeRoutine = StartCoroutine(FadeOutAll());
         }
     }
 
-    void TriggerZoneAudio(int activeIndex)
+
+    void ChangeAudio(int index)
     {
-        for (int i = 0; i < allAudio.Length; i++)
-        {
-            if (allAudio[i] == null) continue;
+        if (allAudio[index] == null)
+            return;
 
-            if (i == activeIndex && !allAudio[i].isPlaying)
-            {
-                allAudio[i].Play();
-                Debug.Log($"👁️ Martani Zone {i} activated.");
-            }
-            else if (i != activeIndex && allAudio[i].isPlaying)
-            {
-                allAudio[i].Stop();
-            }
-        }
+
+        if (fadeRoutine != null)
+            StopCoroutine(fadeRoutine);
+
+
+        fadeRoutine = StartCoroutine(
+            CrossFade(allAudio[index])
+        );
     }
 
-    void StopAllAudio()
+
+    IEnumerator CrossFade(AudioClip newClip)
     {
-        foreach (var audio in allAudio)
+        fadingSource = activeSource;
+        activeSource = (activeSource == sourceA) ? sourceB : sourceA;
+
+
+        activeSource.clip = newClip;
+        activeSource.volume = 0;
+        activeSource.Play();
+
+
+        float timer = 0;
+
+
+        while (timer < fadeTime)
         {
-            if (audio != null && audio.isPlaying)
-                audio.Stop();
+            timer += Time.deltaTime;
+
+            float t = timer / fadeTime;
+
+            activeSource.volume = Mathf.Lerp(
+                0,
+                maxVolume,
+                t
+            );
+
+            fadingSource.volume = Mathf.Lerp(
+                maxVolume,
+                0,
+                t
+            );
+
+            yield return null;
         }
+
+
+        activeSource.volume = maxVolume;
+        fadingSource.Stop();
+        fadingSource.volume = 0;
     }
+
+
+    IEnumerator FadeOutAll()
+    {
+        float timer = 0;
+
+        float startA = sourceA.volume;
+        float startB = sourceB.volume;
+
+
+        while (timer < fadeTime)
+        {
+            timer += Time.deltaTime;
+
+            float t = timer / fadeTime;
+
+            sourceA.volume = Mathf.Lerp(startA, 0, t);
+            sourceB.volume = Mathf.Lerp(startB, 0, t);
+
+            yield return null;
+        }
+
+
+        sourceA.Stop();
+        sourceB.Stop();
+
+        sourceA.volume = 0;
+        sourceB.volume = 0;
+    }
+
 
     void OnDrawGizmos()
     {
-        if (centerPoint == null) return;
+        if (centerPoint == null)
+            return;
 
-        // Emotional depth: core panic to outer ambient
-        Color[] zoneColors = new Color[]
+
+        Color[] colors =
         {
-            new Color(0.9f, 0f, 0f),     // Zone 0 (Chase) – blood red
-            new Color(1f, 0.5f, 0.2f),   // Zone 1 (Closer) – threat orange
-            new Color(1f, 0.9f, 0.4f),   // Zone 2 (Close) – static yellow
-            new Color(0.3f, 0.4f, 0.8f)  // Zone 3 (Far) – ambient blue
+            Color.red,
+            new Color(1f,0.5f,0.2f),
+            Color.yellow,
+            Color.blue
         };
 
-        for (int i = 0; i < zoneColors.Length; i++)
-        {
-            Gizmos.color = zoneColors[i];
 
-            // Chase zone (index 0) should be zoneSize * 1, Far zone (index 3) is zoneSize * 4
-            float radius = zoneSize * (i + 1);
-            Gizmos.DrawWireSphere(centerPoint.position, radius);
+        for (int i = 0; i < colors.Length; i++)
+        {
+            Gizmos.color = colors[i];
+
+            Gizmos.DrawWireSphere(
+                centerPoint.position,
+                zoneSize * (i + 1)
+            );
         }
     }
 }
