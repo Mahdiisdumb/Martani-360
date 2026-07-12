@@ -2432,7 +2432,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 279.79935, y: -205.10033}
+  m_AnchoredPosition: {x: 279.79935, y: -169}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1114916190
@@ -2455,7 +2455,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Martani-360 v.01(Alpha)
+  m_text: 'Martani-360 v.01(Alpha)
+
+    [OVERHALL TESTING]
+
+    {Private Mahdi Studios
+    CHKSUM Public when .01 Done}'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2521,7 +2526,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -262.8736, w: 0}
+  m_margin: {x: -757.1827, y: 0, z: -262.8736, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3111,7 +3116,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: a87514e5cd9a4dd44803d3d2da5c1575, type: 3}
+  m_Resource: {fileID: 8300000, guid: d1ab3add48d6ea04280963936212ad58, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

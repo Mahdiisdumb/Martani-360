@@ -20,6 +20,7 @@ TagManager:
   - Enemy
   - Disc(Train)
   - Hitbox
+  - TARGET
   layers:
   - Default
   - TransparentFX
@@ -66,3 +67,4 @@ TagManager:
   - Light Layer 5 - Light Layer 5
   - Light Layer 6 - Light Layer 6
   - Light Layer 7 - Light Layer 7
+  m_MigratedRenderPipelines: []

@@ -12927,6 +12927,10 @@ MonoBehaviour:
   - {fileID: 357620078}
   - {fileID: 1153936326}
   tagString: Player
+  ChaseMusic: {fileID: 0}
+  WanderMusic: {fileID: 0}
+  TransitionBeforeChase: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!114 &1140258081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12941,6 +12945,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GorillaPlayer: {fileID: 1471516735}
   ObjectsToDisable: []
+  ObjectsToEnable: []
   TeleportLocation: {fileID: 2903685253139049411}
   WaitTime: 0
   TeleportOverlay: {fileID: 1909490441}
@@ -15133,7 +15138,7 @@ Animator:
   m_GameObject: {fileID: 1225946318}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 47f8222a1a66bfd488b5098891c1bcc4, type: 2}
+  m_Controller: {fileID: 9100000, guid: fb1dde41e81b0394597ccd48b6a4212b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -18306,6 +18311,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1477080313}
+    - target: {fileID: 3255155915244148894, guid: 1b3c7aaa16055e94792d24038f568a2c, type: 3}
+      propertyPath: m_VersionIndex
+      value: 2148
+      objectReference: {fileID: 0}
     - target: {fileID: 4939066980501912925, guid: 1b3c7aaa16055e94792d24038f568a2c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 20.96437
@@ -23650,6 +23659,10 @@ MonoBehaviour:
   - {fileID: 357620078}
   - {fileID: 1153936326}
   tagString: Player
+  ChaseMusic: {fileID: 0}
+  WanderMusic: {fileID: 0}
+  TransitionBeforeChase: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!114 &2002027545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23706,6 +23719,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GorillaPlayer: {fileID: 1471516735}
   ObjectsToDisable: []
+  ObjectsToEnable: []
   TeleportLocation: {fileID: 2903685253139049411}
   WaitTime: 0
   TeleportOverlay: {fileID: 1909490441}
@@ -27216,7 +27230,8 @@ PrefabInstance:
       propertyPath: m_text
       value: Hey Martani! Dont know Youre Name But I can tell you how this was made.
         This was becuase we wanted to tests you guys fear! wait what was that...
-        "Horror?" what do you mean "Horror" we dont have that game mode are you good
+        "Horror?" what do you mean "Horror" we dont have that game mode? you must
+        be Mistaken.
       objectReference: {fileID: 0}
     - target: {fileID: 2406982586014131239, guid: 9768615f1e760a34fba7185414e5e69d, type: 3}
       propertyPath: m_fontSize

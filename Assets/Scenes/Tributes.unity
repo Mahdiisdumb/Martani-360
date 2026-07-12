@@ -8,8 +8,8 @@ OcclusionCullingSettings:
     smallestOccluder: 5
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: c41f3cec08a2b2149b717dab6da34c79
-  m_OcclusionCullingData: {fileID: 36300000, guid: fadacf5db17993843940f9ec15cbe3e2, type: 2}
+  m_SceneGUID: 00000000000000000000000000000000
+  m_OcclusionCullingData: {fileID: 0}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -1222,6 +1222,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_RaycastTriggerInteraction: 1
   m_RaycastSnapVolumeInteraction: 1
+  m_RaycastUIDocumentTriggerInteraction: 1
   m_HitClosestOnly: 0
   m_HoverToSelect: 0
   m_HoverTimeToSelect: 0.5
@@ -1629,7 +1630,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32a2d87964e49f446979483e8d9415b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  globalPostProcessingVolume: {fileID: 700470716}
 --- !u!4 &839847774
 Transform:
   m_ObjectHideFlags: 0
@@ -1684,6 +1684,7 @@ MonoBehaviour:
   m_TrackedScrollDeltaMultiplier: 5
   m_NonTrackedScrollDeltaMultiplier: 6
   m_BypassUIToolkitEvents: 0
+  m_PrioritizeDistanceSorting: 0
   m_ActiveInputMode: 0
   m_EnableXRInput: 1
   m_EnableMouseInput: 1
@@ -3545,7 +3546,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1691ee96b8ae86441a43450cbd8aabda, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.000015258789
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1691ee96b8ae86441a43450cbd8aabda, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3553,7 +3554,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1691ee96b8ae86441a43450cbd8aabda, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.9
+      value: 16.9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1691ee96b8ae86441a43450cbd8aabda, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3582,6 +3583,18 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 1691ee96b8ae86441a43450cbd8aabda, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7373559050426773215, guid: 1691ee96b8ae86441a43450cbd8aabda, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.00829
+      objectReference: {fileID: 0}
+    - target: {fileID: -7373559050426773215, guid: 1691ee96b8ae86441a43450cbd8aabda, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.00024
+      objectReference: {fileID: 0}
+    - target: {fileID: -7373559050426773215, guid: 1691ee96b8ae86441a43450cbd8aabda, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.01275
       objectReference: {fileID: 0}
     - target: {fileID: -7053608230895835896, guid: 1691ee96b8ae86441a43450cbd8aabda, type: 3}
       propertyPath: m_RootBone
@@ -9493,7 +9506,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1691ee96b8ae86441a43450cbd8aabda, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1245883657441260254, guid: 1691ee96b8ae86441a43450cbd8aabda, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2044986536943402552, guid: 1691ee96b8ae86441a43450cbd8aabda, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16074,6 +16091,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_RaycastTriggerInteraction: 1
   m_RaycastSnapVolumeInteraction: 1
+  m_RaycastUIDocumentTriggerInteraction: 1
   m_HitClosestOnly: 0
   m_HoverToSelect: 0
   m_HoverTimeToSelect: 0.5

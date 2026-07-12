@@ -6,6 +6,7 @@ public class TeleportGorillaPlayer : MonoBehaviour
 {
     public Transform GorillaPlayer;
     public GameObject[] ObjectsToDisable;
+    public GameObject[] ObjectsToEnable;
     public Transform TeleportLocation;
     public float WaitTime;
     public GameObject TeleportOverlay;
@@ -23,45 +24,55 @@ public class TeleportGorillaPlayer : MonoBehaviour
         {
             TeleportOverlay.SetActive(true);
             TeleportSound.Play();
+
             foreach (GameObject OTD in ObjectsToDisable)
             {
                 OTD.SetActive(false);
             }
+            foreach (GameObject OTE in ObjectsToEnable)
+            {
+                OTE.SetActive(true);
+            }
+
             StartCoroutine(TPWD());
         }
-   
+
     }
-IEnumerator TPWD()
-{
-    yield return new WaitForSeconds(WaitTime);
-    // Store rigidbody reference
-    Rigidbody playerRigidbody = GorillaPlayer.gameObject.GetComponent<Rigidbody>();
-
-    // Disable collisions
-    GorillaLocomotion.Player.Instance.locomotionEnabledLayers = default;
-    GorillaLocomotion.Player.Instance.headCollider.enabled = false;
-    GorillaLocomotion.Player.Instance.bodyCollider.enabled = false;
-
-    // Set rigidbody to kinematic
-    playerRigidbody.isKinematic = true;
-
-    GorillaPlayer.position = TeleportLocation.position;
-    playerRigidbody.linearVelocity = Vector3.zero;
-
-    yield return new WaitForSeconds(WaitTime);
-    // Enable collisions again
-    GorillaLocomotion.Player.Instance.locomotionEnabledLayers = defaultLayers;
-    GorillaLocomotion.Player.Instance.headCollider.enabled = true;
-    GorillaLocomotion.Player.Instance.bodyCollider.enabled = true;
-
-    // Set rigidbody back to non-kinematic
-    playerRigidbody.isKinematic = false;
-
-    foreach (GameObject OTD in ObjectsToDisable)
+    IEnumerator TPWD()
     {
-        OTD.SetActive(true);
+        yield return new WaitForSeconds(WaitTime);
+        // Store rigidbody reference
+        Rigidbody playerRigidbody = GorillaPlayer.gameObject.GetComponent<Rigidbody>();
+
+        // Disable collisions
+        GorillaLocomotion.Player.Instance.locomotionEnabledLayers = default;
+        GorillaLocomotion.Player.Instance.headCollider.enabled = false;
+        GorillaLocomotion.Player.Instance.bodyCollider.enabled = false;
+
+        // Set rigidbody to kinematic
+        playerRigidbody.isKinematic = true;
+
+        GorillaPlayer.position = TeleportLocation.position;
+        playerRigidbody.linearVelocity = Vector3.zero;
+
+        yield return new WaitForSeconds(WaitTime);
+        // Enable collisions again
+        GorillaLocomotion.Player.Instance.locomotionEnabledLayers = defaultLayers;
+        GorillaLocomotion.Player.Instance.headCollider.enabled = true;
+        GorillaLocomotion.Player.Instance.bodyCollider.enabled = true;
+
+        // Set rigidbody back to non-kinematic
+        playerRigidbody.isKinematic = false;
+
+        foreach (GameObject OTD in ObjectsToDisable)
+        {
+            OTD.SetActive(true);
+        }
+        foreach (GameObject OTE in ObjectsToEnable)
+        {
+            OTE.SetActive(false);
+        }
+        TeleportOverlay.SetActive(false);
     }
-    TeleportOverlay.SetActive(false);
-}
 
 }
