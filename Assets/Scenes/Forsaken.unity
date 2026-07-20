@@ -11866,8 +11866,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DetectionRange: 18.5
   tagString: Player
-  MonsterSpeedWander: 32
-  MonsterSpeedChase: 64
+  MonsterSpeedWander: 8
+  MonsterSpeedChase: 16
   currentPoint: 0
   RepathDistance: 0.5
   agent: {fileID: 1140258079}
@@ -13678,7 +13678,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 430285557273465591, guid: ce5c2251d70caf148bbad13bb99ebf54, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 153.07082
+      value: 151.2
       objectReference: {fileID: 0}
     - target: {fileID: 430285557273465591, guid: ce5c2251d70caf148bbad13bb99ebf54, type: 3}
       propertyPath: m_LocalPosition.y
@@ -22131,8 +22131,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DetectionRange: 18.5
   tagString: Player
-  MonsterSpeedWander: 32
-  MonsterSpeedChase: 64
+  MonsterSpeedWander: 8
+  MonsterSpeedChase: 16
   currentPoint: 0
   RepathDistance: 0.5
   agent: {fileID: 2002027542}
@@ -22166,9 +22166,9 @@ MonoBehaviour:
   targetTag: Player
   centerPoint: {fileID: 3864649306685335483}
   zoneSize: 18.7
-  farAudio: {fileID: 0}
-  closeAudio: {fileID: 0}
-  closerAudio: {fileID: 0}
+  farAudio: {fileID: 8300000, guid: 62095fcb369aa614aa02b205235642cc, type: 3}
+  closeAudio: {fileID: 8300000, guid: 62095fcb369aa614aa02b205235642cc, type: 3}
+  closerAudio: {fileID: 8300000, guid: 62095fcb369aa614aa02b205235642cc, type: 3}
   chaseAudio: {fileID: 8300000, guid: c3bcae8c9ed5d834bb034d2aa966b4fd, type: 3}
   fadeTime: 2
   maxVolume: 1
@@ -22474,20 +22474,20 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 69080dd352beced48bef78aeac9c5d5a, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  DopplerLevel: 0
+  MinDistance: 6.4
+  MaxDistance: 37
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -22496,22 +22496,40 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
+      value: 0.8293724
+      inSlope: -4.0729947
+      outSlope: -4.0729947
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.49123627
+      value: 0.5
+      inSlope: -1.0182487
+      outSlope: -1.0182487
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.98247254
+      value: 0.25
+      inSlope: -0.25456217
+      outSlope: -0.25456217
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      value: 0.24561813
+      inSlope: -0.24571605
+      outSlope: -0.24571605
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -22520,7 +22538,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -22550,7 +22568,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0

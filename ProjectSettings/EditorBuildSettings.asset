@@ -47,6 +47,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LV2.unity
     guid: 7373745062ebf814c805afd38ff51142
+  - enabled: 1
+    path: Assets/Scenes/TTFL.unity
+    guid: 025a76813d1c18841b37119e7bd1caa3
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: e6c42826aea30fc4aa6b32c7235d35f1, type: 2}
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}

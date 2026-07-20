@@ -20,8 +20,8 @@ public class MonsterNavigation : MonoBehaviour
     public AudioClip WanderMusic;
     public AudioClip TransitionBeforeChase;
     public float MusicFadeTime = 2f;
-    private AudioSource musicA;
-    private AudioSource musicB;
+    public AudioSource musicA;
+    public AudioSource musicB;
     private AudioSource activeMusic;
     private AudioSource fadingMusic;
     private Coroutine fadeRoutine;
@@ -120,8 +120,14 @@ public class MonsterNavigation : MonoBehaviour
         {
             agent.speed = MonsterSpeedWander;
             if (!agent.pathPending &&
-               agent.remainingDistance <= 0.5f)
+             agent.remainingDistance <= agent.stoppingDistance &&
+             (!agent.hasPath || agent.velocity.sqrMagnitude < 0.01f))
             {
+                currentPoint++;
+
+                if (currentPoint >= points.Length)
+                    currentPoint = 0;
+
                 Wander();
             }
             if (currentState != MonsterState.Wander)
@@ -144,12 +150,11 @@ public class MonsterNavigation : MonoBehaviour
     {
         if (points == null || points.Length == 0)
             return;
+
         if (!agent.isOnNavMesh)
             return;
+
         agent.SetDestination(points[currentPoint].position);
-        currentPoint++;
-        if (currentPoint >= points.Length)
-            currentPoint = 0;
     }
     void BeginChaseSequence()
     {
@@ -234,20 +239,21 @@ public class MonsterNavigation : MonoBehaviour
     }
     void PlaceOnNavMesh()
     {
+        Debug.Log("Monster position: " + transform.position);
+
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(
-            transform.position,
-            out hit,
-            5f,
-            NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(transform.position, out hit, 100f, NavMesh.AllAreas))
         {
+            Debug.Log("Found NavMesh at: " + hit.position);
+
+            if (!agent.enabled)
+                agent.enabled = true;
+
             agent.Warp(hit.position);
         }
         else
         {
-            Debug.LogError(
-                "Monster cannot find NavMesh!"
-            );
+            Debug.LogError("Monster cannot find NavMesh!");
         }
     }
     private void OnDrawGizmosSelected()

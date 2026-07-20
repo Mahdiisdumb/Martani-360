@@ -66,11 +66,11 @@ public class TeleportGorillaPlayer : MonoBehaviour
 
         foreach (GameObject OTD in ObjectsToDisable)
         {
-            OTD.SetActive(true);
+            OTD.SetActive(false);
         }
         foreach (GameObject OTE in ObjectsToEnable)
         {
-            OTE.SetActive(false);
+            OTE.SetActive(true);
         }
         TeleportOverlay.SetActive(false);
     }
