@@ -24,6 +24,7 @@
     <ProjectGuid>{51d4cf53-32c6-49fb-89cd-b16411ff5b14}</ProjectGuid>
     <RootNamespace>Martani360Installer</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>RES_DIS_SRV_PRG</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -146,6 +147,11 @@
     <Image Include="quest.ico" />
     <Image Include="small.ico" />
     <Image Include="windows.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="tools\adb\adb.exe" />
+    <None Include="tools\adb\AdbWinApi.dll" />
+    <None Include="tools\adb\AdbWinUsbApi.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

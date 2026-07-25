@@ -58,4 +58,9 @@
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="tools\adb\adb.exe" />
+    <None Include="tools\adb\AdbWinApi.dll" />
+    <None Include="tools\adb\AdbWinUsbApi.dll" />
+  </ItemGroup>
 </Project>
