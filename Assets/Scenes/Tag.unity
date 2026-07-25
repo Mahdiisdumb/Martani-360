@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 1b633269e4ab8dc4f8434d5bc3ba1023, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -1622,13 +1622,13 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8167752529851589310, guid: 2e5ad19f63e8b2f48b2a77cd7933c081, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 5035478077542460200, guid: 2e5ad19f63e8b2f48b2a77cd7933c081, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
     - targetCorrespondingSourceObject: {fileID: 1008512288095195215, guid: 2e5ad19f63e8b2f48b2a77cd7933c081, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
     - targetCorrespondingSourceObject: {fileID: 6913884801466347048, guid: 2e5ad19f63e8b2f48b2a77cd7933c081, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 5035478077542460200, guid: 2e5ad19f63e8b2f48b2a77cd7933c081, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 2e5ad19f63e8b2f48b2a77cd7933c081, type: 3}
@@ -5946,8 +5946,11 @@ MonoBehaviour:
   HitBoxes: []
   TaggedPeople: 0
   CanStartNewRound: 1
+  IsRoundActive: 0
+  MatchStartRequested: 0
   RandomStartPlayerNumb: -1
   NewTaggedPlayer: {fileID: 0}
+  CurrentItPlayer: {fileID: 0}
   TotalPlayers: 0
   IsInTagQueue: 0
   TaggingHands: []

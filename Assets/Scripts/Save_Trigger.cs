@@ -1,63 +1,66 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(Collider))]
 public class Save_Trigger : MonoBehaviour
 {
-    [Header("Trigger changes scene or objects permanently")]
+    [Header("Persistent Trigger")]
 
-    [Tooltip("Save key for PlayerPrefs")]
     public string StateTrigger = "SaveState";
-
-    [Tooltip("Whether this has been triggered")]
-    public bool Triggered = false;
-
-    [Tooltip("Object to activate after trigger")]
-    public GameObject Replacement;
-
-    [Tooltip("Original object to disable")]
-    public GameObject Orgin;
-
-    [Tooltip("Tag required to activate trigger")]
     public string TagToCheck = "Player";
 
-    [Tooltip("Is this a scene change trigger?")]
+    [Header("Object Swap")]
+    public GameObject Replacement;
+    public GameObject Orgin;
+
+    [Header("Scene Change")]
     public bool sceneChangeTrigger = false;
+    public string sceneToChange = "";
 
-    [Tooltip("Scene to load if triggered")]
-    public string sceneToChange = "somthing";
+    private bool triggered;
 
-    void OnTriggerEnter(Collider other)
+    private void Start()
     {
-        if (!other.CompareTag(TagToCheck)) return;
+        triggered = PlayerPrefs.GetInt(StateTrigger, 0) == 1;
 
-        Triggered = true;
-
-        PlayerPrefs.SetInt(StateTrigger, 1);
-        PlayerPrefs.Save();
+        if (!triggered)
+            return;
 
         ApplyChanges();
 
-        if (sceneChangeTrigger)
+        if (sceneChangeTrigger && !string.IsNullOrEmpty(sceneToChange))
         {
             SceneManager.LoadScene(sceneToChange);
+            return;
         }
+
+        GetComponent<Collider>().enabled = false;
     }
 
-    void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        if (PlayerPrefs.GetInt(StateTrigger, 0) == 1)
-        {
-            Triggered = true;
-            ApplyChanges();
-        }
+        if (triggered)
+            return;
+
+        if (!other.CompareTag(TagToCheck))
+            return;
+
+        triggered = true;
+
+        // Save only. Do NOT apply changes now.
+        PlayerPrefs.SetInt(StateTrigger, 1);
+        PlayerPrefs.Save();
+
+        // Prevent multiple saves this session.
+        GetComponent<Collider>().enabled = false;
     }
 
-    void ApplyChanges()
+    private void ApplyChanges()
     {
-        if (Replacement != null && Orgin != null)
-        {
+        if (Orgin != null)
             Orgin.SetActive(false);
+
+        if (Replacement != null)
             Replacement.SetActive(true);
-        }
     }
 }
