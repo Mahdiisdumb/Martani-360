@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 507249377088755688}
   - component: {fileID: 364649398914084422}
   m_Layer: 0
-  m_Name: Leycard
+  m_Name: Keycard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

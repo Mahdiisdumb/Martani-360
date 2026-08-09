@@ -25814,7 +25814,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd41a169f55e20a4fad1c3dc93678ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PhotonVRDisconnector
-  nextSceneName: Onload
+  nextSceneName: Main
 --- !u!64 &913279390
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -28749,8 +28749,8 @@ Transform:
   m_GameObject: {fileID: 1039216355}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.25881863, z: -0, w: 0.965926}
-  m_LocalPosition: {x: -53.70412, y: -0.221, z: -16.015738}
-  m_LocalScale: {x: 0.49653, y: 1, z: 2}
+  m_LocalPosition: {x: -53.704, y: -0.221, z: -16.016}
+  m_LocalScale: {x: 0.17305, y: 1, z: 2.6195}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1001616605}
