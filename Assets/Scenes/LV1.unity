@@ -22411,7 +22411,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: 34bd03198668677478064686cd31d70e, type: 2}
+  sharedProfile: {fileID: 11400000, guid: 4d52bb442d0da6b468adb8be692261f9, type: 2}
 --- !u!4 &728174659
 Transform:
   m_ObjectHideFlags: 0
@@ -71017,10 +71017,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
   m_IsGlobal: 0
-  priority: 0
+  priority: 1
   blendDistance: 56
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: 8cfa491077878774fa03e3e7c75cb1b9, type: 2}
+  sharedProfile: {fileID: 11400000, guid: 3a3f3033b31f21745bcf54851ba8b36e, type: 2}
 --- !u!82 &3208240513408402905
 AudioSource:
   m_ObjectHideFlags: 0

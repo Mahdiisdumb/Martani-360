@@ -21,9 +21,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Forsaken.unity
     guid: 5b03a6f1fb1f86a4f940104d89e71a11
   - enabled: 1
-    path: Assets/Scenes/Tag.unity
-    guid: 4237984d1e1cdee4ab66f4bd044c90df
-  - enabled: 1
     path: Assets/Scenes/Echo.unity
     guid: d04d40318ceeea64cb8b55110f08292a
   - enabled: 1
