@@ -46,6 +46,7 @@ std::wstring QUEST_PACKAGE = L"com.MahdiStudios.Martani360";
 // Embedded ADB path
 std::wstring adbTempFolder = L"";
 std::wstring adbExePath = L"";
+std::wstring g_selectedDevice = L"";
 
 // ---------------- THEME STATE (new) ----------------
 #define COL_BG          RGB(0, 0, 0)
@@ -157,15 +158,17 @@ RECT rWindows = { 460, 252, 840, 312 };
 RECT rLaunch = { 40, 324, 840, 374 };
 RECT rProgressArea = { 40, 396, 840, 412 };
 RECT rLog = { 20, 432, 860, 650 };
-RECT rTicker = { 20, 658, 860, 684 };
+RECT rCopyLog = { 40, 662, 420, 705 };
+RECT rTicker = { 20, 713, 860, 739 };
 
 // ---------------- LOG / STATUS HELPERS ----------------
 void LogMsg(const std::wstring& msg, bool anomaly = false)
 {
     SYSTEMTIME st; GetLocalTime(&st);
-    wchar_t buf[16];
-    swprintf_s(buf, L"[%02d:%02d:%02d] ", st.wHour, st.wMinute, st.wSecond);
-    logLines.push_back({ std::wstring(buf) + msg, anomaly });
+    wchar_t buf[32];
+    swprintf_s(buf, L"[%02d:%02d:%02d.%03d] ", st.wHour, st.wMinute, st.wSecond, st.wMilliseconds);
+    std::wstring logEntry = std::wstring(buf) + msg;
+    logLines.push_back({ logEntry, anomaly });
     while (logLines.size() > MAX_LOG_LINES) logLines.pop_front();
     if (hWndMain) InvalidateRect(hWndMain, NULL, FALSE);
 }
@@ -198,6 +201,59 @@ void SetProgress(int p)
 {
     currentProgressPercent = p;
     if (hWndMain) InvalidateRect(hWndMain, NULL, FALSE);
+}
+
+void CopyLogToClipboard()
+{
+    // Build complete log text
+    std::wstring logText;
+    for (const auto& entry : logLines)
+    {
+        logText += entry.text + L"\r\n";
+    }
+
+    // Open clipboard
+    if (!OpenClipboard(NULL))
+    {
+        LogMsg(L"[COPY] ERROR: Could not open clipboard", true);
+        SetError(L"Failed to access clipboard.");
+        return;
+    }
+
+    // Clear clipboard
+    EmptyClipboard();
+
+    // Allocate memory for clipboard data
+    size_t dataSize = (logText.size() + 1) * sizeof(wchar_t);
+    HGLOBAL hGlobal = GlobalAlloc(GMEM_MOVEABLE, dataSize);
+    if (!hGlobal)
+    {
+        CloseClipboard();
+        LogMsg(L"[COPY] ERROR: Could not allocate memory", true);
+        SetError(L"Failed to allocate memory.");
+        return;
+    }
+
+    // Copy data to global memory
+    wchar_t* pData = (wchar_t*)GlobalLock(hGlobal);
+    wcscpy_s(pData, logText.size() + 1, logText.c_str());
+    GlobalUnlock(hGlobal);
+
+    // Set clipboard data
+    if (!SetClipboardData(CF_UNICODETEXT, hGlobal))
+    {
+        GlobalFree(hGlobal);
+        CloseClipboard();
+        LogMsg(L"[COPY] ERROR: Could not set clipboard data", true);
+        SetError(L"Failed to copy to clipboard.");
+        return;
+    }
+
+    // Close clipboard
+    CloseClipboard();
+
+    LogMsg(L"[COPY] Log copied to clipboard (" + std::to_wstring(logLines.size()) + L" lines)");
+    SetStatus(L"Log copied to clipboard!");
 }
 
 // ---------------- FILE (backend, unchanged) ----------------
@@ -246,17 +302,38 @@ bool ExtractResourceToFile(int resourceId, const wchar_t* resourceType, const wc
 
 bool InitializeEmbeddedADB()
 {
+    LogMsg(L"[ADB] Initializing ADB subsystem...");
+
     // Get temp folder
     wchar_t tempPath[MAX_PATH];
     if (!GetTempPathW(MAX_PATH, tempPath))
+    {
+        LogMsg(L"[ADB] ERROR: Could not get temp path", true);
         return false;
+    }
 
-    // Create ADB subfolder
-    wcscat_s(tempPath, MAX_PATH, L"MartaniADB\\");
-    adbTempFolder = tempPath;
+    LogMsg(L"[ADB] Temp path retrieved: " + std::wstring(tempPath));
+
+    // Build ADB subfolder path
+    adbTempFolder = std::wstring(tempPath);
+    if (adbTempFolder.back() == L'\\')
+    {
+        adbTempFolder.pop_back();
+    }
+    adbTempFolder += L"\\MartaniADB\\";
+
+    LogMsg(L"[ADB] Target folder: " + adbTempFolder);
 
     // Create the folder
-    CreateDirectoryW(adbTempFolder.c_str(), NULL);
+    BOOL folderCreated = CreateDirectoryW(adbTempFolder.c_str(), NULL);
+    if (folderCreated)
+    {
+        LogMsg(L"[ADB] Created ADB directory");
+    }
+    else
+    {
+        LogMsg(L"[ADB] ADB directory already exists or creation failed");
+    }
 
     // Extract ADB files
     wchar_t adbExeFile[MAX_PATH];
@@ -271,35 +348,55 @@ bool InitializeEmbeddedADB()
     wcscpy_s(adbDll2File, adbTempFolder.c_str());
     wcscat_s(adbDll2File, MAX_PATH, L"AdbWinUsbApi.dll");
 
-    // NOTE: these are pulled from the RC's "BINARY" resource sector,
-    // not RT_RCDATA. FindResourceW resolves "BINARY" as a user-defined
-    // resource-type string because it isn't one of the predefined RT_*
-    // constants -- your .rc entries must declare these three with the
-    // BINARY keyword, e.g.:
-    //   IDR_ADB_EXE   BINARY   "adb.exe"
-    //   IDR_ADB_DLL1  BINARY   "AdbWinApi.dll"
-    //   IDR_ADB_DLL2  BINARY   "AdbWinUsbApi.dll"
-
     // Extract only if not already present
     if (!FileExists(adbExeFile))
     {
+        LogMsg(L"[ADB] Extracting adb.exe to: " + std::wstring(adbExeFile));
         if (!ExtractResourceToFile(IDR_ADB_EXE, L"BINARY", adbExeFile))
+        {
+            LogMsg(L"[ADB] ERROR: Failed to extract adb.exe", true);
             return false;
+        }
+        LogMsg(L"[ADB] adb.exe extracted successfully");
+    }
+    else
+    {
+        LogMsg(L"[ADB] adb.exe already present at: " + std::wstring(adbExeFile));
     }
 
     if (!FileExists(adbDll1File))
     {
+        LogMsg(L"[ADB] Extracting AdbWinApi.dll to: " + std::wstring(adbDll1File));
         if (!ExtractResourceToFile(IDR_ADB_DLL1, L"BINARY", adbDll1File))
+        {
+            LogMsg(L"[ADB] ERROR: Failed to extract AdbWinApi.dll", true);
             return false;
+        }
+        LogMsg(L"[ADB] AdbWinApi.dll extracted successfully");
+    }
+    else
+    {
+        LogMsg(L"[ADB] AdbWinApi.dll already present");
     }
 
     if (!FileExists(adbDll2File))
     {
+        LogMsg(L"[ADB] Extracting AdbWinUsbApi.dll to: " + std::wstring(adbDll2File));
         if (!ExtractResourceToFile(IDR_ADB_DLL2, L"BINARY", adbDll2File))
+        {
+            LogMsg(L"[ADB] ERROR: Failed to extract AdbWinUsbApi.dll", true);
             return false;
+        }
+        LogMsg(L"[ADB] AdbWinUsbApi.dll extracted successfully");
+    }
+    else
+    {
+        LogMsg(L"[ADB] AdbWinUsbApi.dll already present");
     }
 
     adbExePath = adbExeFile;
+    LogMsg(L"[ADB] ADB binary path: " + adbExePath);
+    LogMsg(L"[ADB] ADB initialization complete");
     return true;
 }
 
@@ -318,8 +415,15 @@ void SaveWindowsState()
 // ---------------- ADB HELPERS (backend, unchanged) ----------------
 bool IsAdbAvailable()
 {
+    LogMsg(L"[ADB] Checking ADB availability...");
+
     if (adbExePath.empty())
+    {
+        LogMsg(L"[ADB] ERROR: ADB not initialized", true);
         return false;
+    }
+
+    LogMsg(L"[ADB] Testing ADB binary: " + adbExePath);
 
     char command[512];
     size_t convertedChars = 0;
@@ -328,14 +432,46 @@ bool IsAdbAvailable()
     char fullCommand[1024];
     sprintf_s(fullCommand, "\"%s\" version > nul 2>&1", command);
 
+    LogMsg(L"[ADB] Testing with command: " + std::wstring(fullCommand, fullCommand + strlen(fullCommand)));
+
     int result = system(fullCommand);
-    return result == 0;
+
+    if (result == 0)
+    {
+        LogMsg(L"[ADB] ADB binary is available and functional");
+        return true;
+    }
+    else
+    {
+        LogMsg(L"[ADB] ERROR: ADB version check failed with exit code " + std::to_wstring(result), true);
+
+        // Try to run adb directly and capture output
+        LogMsg(L"[ADB] Attempting to run adb to capture error output...");
+        FILE* testPipe = _popen(fullCommand, "r");
+        if (testPipe)
+        {
+            char buffer[256];
+            while (fgets(buffer, sizeof(buffer), testPipe) != NULL)
+            {
+                std::wstring wline(buffer, buffer + strlen(buffer));
+                LogMsg(L"[ADB] Output: " + wline);
+            }
+            _pclose(testPipe);
+        }
+
+        return false;
+    }
 }
 
 bool CheckAdbPermission()
 {
+    LogMsg(L"[ADB] Checking for connected Android devices...");
+
     if (adbExePath.empty())
+    {
+        LogMsg(L"[ADB] ERROR: ADB not initialized", true);
         return false;
+    }
 
     char command[512];
     size_t convertedChars = 0;
@@ -344,9 +480,14 @@ bool CheckAdbPermission()
     char fullCommand[1024];
     sprintf_s(fullCommand, "\"%s\" devices 2>&1", command);
 
+    LogMsg(L"[ADB] Executing: adb devices");
+
     FILE* pipe = _popen(fullCommand, "r");
     if (pipe == NULL)
+    {
+        LogMsg(L"[ADB] ERROR: Failed to execute adb devices command", true);
         return false;
+    }
 
     char buffer[512];
     bool hasDevices = false;
@@ -359,6 +500,7 @@ bool CheckAdbPermission()
 
         if (line.find("List of attached devices") != std::string::npos)
         {
+            LogMsg(L"[ADB] Response: List of attached devices");
             continue;
         }
 
@@ -373,52 +515,390 @@ bool CheckAdbPermission()
                 !serial.empty() && serial != "\r" && serial != "\n")
             {
                 hasDevices = true;
+                std::wstring wserial(serial.begin(), serial.end());
+                std::wstring wstatus(status.begin(), status.end());
+                LogMsg(L"[ADB] Device found: " + wserial + L" -> " + wstatus);
                 break;
             }
         }
     }
 
     _pclose(pipe);
-    return hasDevices;
+
+    if (hasDevices)
+    {
+        LogMsg(L"[ADB] Device check successful - authorized device detected");
+        return true;
+    }
+    else
+    {
+        LogMsg(L"[ADB] ERROR: No authorized devices found", true);
+        LogMsg(L"[ADB] Ensure device is connected and USB debugging is enabled");
+        return false;
+    }
 }
 
-bool InstallAPK(const std::wstring& apkPath)
+std::wstring GetAvailableDevices()
 {
+    LogMsg(L"[ADB] Querying available devices...");
+
     if (adbExePath.empty())
-        return false;
+    {
+        LogMsg(L"[ADB] ERROR: ADB not initialized", true);
+        return L"";
+    }
 
-    char adbCmd[512];
+    char command[512];
     size_t convertedChars = 0;
-    wcstombs_s(&convertedChars, adbCmd, 512, adbExePath.c_str(), 512);
-
-    char apkCmd[512];
-    convertedChars = 0;
-    wcstombs_s(&convertedChars, apkCmd, 512, apkPath.c_str(), 512);
+    wcstombs_s(&convertedChars, command, 512, adbExePath.c_str(), 512);
 
     char fullCommand[1024];
-    sprintf_s(fullCommand, "\"%s\" install -r \"%s\" 2>&1", adbCmd, apkCmd);
+    sprintf_s(fullCommand, "\"%s\" devices 2>&1", command);
 
     FILE* pipe = _popen(fullCommand, "r");
     if (pipe == NULL)
-        return false;
+    {
+        LogMsg(L"[ADB] ERROR: Failed to query devices", true);
+        return L"";
+    }
 
     char buffer[512];
-    bool success = false;
+    std::wstring devices;
+    int deviceCount = 0;
 
     while (fgets(buffer, sizeof(buffer), pipe) != NULL)
     {
         std::string line(buffer);
-        if (line.find("Success") != std::string::npos)
+
+        size_t tabPos = line.find("\t");
+        if (tabPos != std::string::npos)
         {
-            success = true;
-            break;
+            std::string serial = line.substr(0, tabPos);
+            std::string status = line.substr(tabPos);
+
+            if (status.find("device") != std::string::npos &&
+                status.find("offline") == std::string::npos &&
+                !serial.empty() && serial != "\r" && serial != "\n")
+            {
+                if (!devices.empty())
+                {
+                    devices += L"|";
+                }
+                std::wstring wserial(serial.begin(), serial.end());
+                devices += wserial;
+                deviceCount++;
+                LogMsg(L"[ADB] Found device: " + wserial);
+            }
         }
     }
 
-    int status = _pclose(pipe);
+    _pclose(pipe);
 
-    return status == 0 && success;
+    LogMsg(L"[ADB] Total devices found: " + std::to_wstring(deviceCount));
+    return devices;
 }
+
+bool SelectDevice()
+{
+    LogMsg(L"[ADB] Multiple devices detected, prompting user to select...");
+
+    std::wstring devices = GetAvailableDevices();
+
+    if (devices.empty())
+    {
+        LogMsg(L"[ADB] ERROR: No devices available for selection", true);
+        return false;
+    }
+
+    // Split devices by pipe
+    std::vector<std::wstring> deviceList;
+    size_t pos = 0;
+    while ((pos = devices.find(L"|")) != std::wstring::npos)
+    {
+        deviceList.push_back(devices.substr(0, pos));
+        devices.erase(0, pos + 1);
+    }
+    if (!devices.empty())
+    {
+        deviceList.push_back(devices);
+    }
+
+    // If only one device, use it automatically
+    if (deviceList.size() == 1)
+    {
+        g_selectedDevice = deviceList[0];
+        LogMsg(L"[ADB] Single device detected, selecting automatically: " + g_selectedDevice);
+        return true;
+    }
+
+    // Show dialog for manual selection
+    std::wstring message = L"Multiple devices detected:\n\n";
+    for (size_t i = 0; i < deviceList.size(); i++)
+    {
+        message += std::to_wstring(i + 1) + L". " + deviceList[i] + L"\n";
+    }
+    message += L"\nSelect the device to install to (or press Cancel to abort):";
+
+    // Simple selection via MessageBox with index
+    int selection = 0;
+    for (size_t i = 0; i < deviceList.size(); i++)
+    {
+        std::wstring deviceMsg = L"Use device " + std::to_wstring(i + 1) + L" of " + std::to_wstring(deviceList.size()) + L"?\n" + deviceList[i];
+        int result = MessageBoxW(NULL, deviceMsg.c_str(), L"SELECT DEVICE", MB_YESNOCANCEL | MB_ICONQUESTION);
+
+        if (result == IDYES)
+        {
+            g_selectedDevice = deviceList[i];
+            LogMsg(L"[ADB] Device selected: " + g_selectedDevice);
+            return true;
+        }
+        else if (result == IDCANCEL)
+        {
+            LogMsg(L"[ADB] Device selection cancelled by user", true);
+            return false;
+        }
+    }
+
+    LogMsg(L"[ADB] ERROR: No device selected", true);
+    return false;
+}
+
+bool WaitForAdbDevice()
+{
+    // Keep showing a dialog until device is connected or user cancels
+    while (true)
+    {
+        int result = MessageBoxW(hWndMain,
+            L"Have you connected your Android device and enabled USB debugging?\n\n"
+            L"Please:\n"
+            L"1. Connect your device via USB cable\n"
+            L"2. Go to Settings > Developer Options > USB Debugging (enable it)\n"
+            L"3. Accept the ADB authorization prompt on your device\n"
+            L"4. Click 'Check' to verify",
+            L"Device Connection Required",
+            MB_RETRYCANCEL | MB_ICONINFORMATION);
+
+        if (result == IDCANCEL)
+        {
+            return false;  // User cancelled
+        }
+
+        // Check if device is connected
+        if (CheckAdbPermission())
+        {
+            return true;   // Device connected and permission granted
+        }
+
+        // Device not ready, show error and retry
+        MessageBoxW(hWndMain,
+            L"Device not detected or USB debugging not enabled.\n\n"
+            L"Please ensure:\n"
+            L"1. Device is properly connected via USB\n"
+            L"2. USB Debugging is enabled (Settings > Developer Options > USB Debugging)\n"
+            L"3. You accepted the ADB authorization prompt on your device\n\n"
+            L"Click 'Check' to make sure.",
+            L"Device Not Found",
+            MB_RETRYCANCEL | MB_ICONWARNING);
+
+        // If user clicked Cancel, exit loop
+        if (result == IDCANCEL)
+        {
+            return false;
+        }
+        // If IDRETRY, loop continues
+    }
+}
+
+
+bool InstallAPK(const std::wstring& apkPath)
+{
+    LogMsg(L"[APK] Starting installation process...");
+    LogMsg(L"[APK] APK file path: " + apkPath);
+
+    if (adbExePath.empty())
+    {
+        LogMsg(L"[APK] ERROR: ADB not initialized", true);
+        return false;
+    }
+
+    if (!FileExists(apkPath.c_str()))
+    {
+        LogMsg(L"[APK] ERROR: APK file not found: " + apkPath, true);
+        return false;
+    }
+
+    if (!FileExists(adbExePath.c_str()))
+    {
+        LogMsg(L"[APK] ERROR: ADB executable not found: " + adbExePath, true);
+        return false;
+    }
+
+    LogMsg(L"[APK] APK file verified to exist");
+    LogMsg(L"[APK] ADB executable: " + adbExePath);
+
+    // Build command with device selection if needed
+    std::wstring commandLine;
+    if (!g_selectedDevice.empty())
+    {
+        commandLine = L"\"" + adbExePath + L"\" -s " + g_selectedDevice + L" install -r \"" + apkPath + L"\"";
+        LogMsg(L"[APK] Using device: " + g_selectedDevice);
+    }
+    else
+    {
+        commandLine = L"\"" + adbExePath + L"\" install -r \"" + apkPath + L"\"";
+    }
+
+    LogMsg(L"[APK] Full command: " + commandLine);
+    LogMsg(L"[APK] Creating output pipe...");
+
+    SECURITY_ATTRIBUTES sa{};
+    sa.nLength = sizeof(sa);
+    sa.bInheritHandle = TRUE;
+
+    HANDLE hRead = NULL;
+    HANDLE hWrite = NULL;
+
+    if (!CreatePipe(&hRead, &hWrite, &sa, 0))
+    {
+        LogMsg(L"[APK] ERROR: CreatePipe failed: " +
+            std::to_wstring(GetLastError()), true);
+        return false;
+    }
+
+    SetHandleInformation(hRead, HANDLE_FLAG_INHERIT, 0);
+
+    STARTUPINFOW si{};
+    si.cb = sizeof(si);
+    si.dwFlags = STARTF_USESTDHANDLES;
+    si.hStdOutput = hWrite;
+    si.hStdError = hWrite;
+    si.hStdInput = GetStdHandle(STD_INPUT_HANDLE);
+
+    PROCESS_INFORMATION pi{};
+
+    LogMsg(L"[APK] Launching ADB process...");
+
+    BOOL created = CreateProcessW(
+        adbExePath.c_str(),
+        commandLine.data(),
+        NULL,
+        NULL,
+        TRUE,
+        CREATE_NO_WINDOW,
+        NULL,
+        NULL,
+        &si,
+        &pi
+    );
+
+    CloseHandle(hWrite);
+    hWrite = NULL;
+
+    if (!created)
+    {
+        DWORD error = GetLastError();
+
+        LogMsg(L"[APK] ERROR: CreateProcessW failed: " +
+            std::to_wstring(error), true);
+
+        CloseHandle(hRead);
+        return false;
+    }
+
+    LogMsg(L"[APK] ADB process started successfully");
+
+    CloseHandle(pi.hThread);
+
+    std::string outputBuffer;
+    char buffer[4096];
+    DWORD bytesRead = 0;
+    int lineNum = 0;
+    bool successMessage = false;
+
+    auto LogOutputLine = [&](const std::string& line)
+        {
+            if (line.empty())
+                return;
+
+            int size = MultiByteToWideChar(
+                CP_UTF8, 0, line.c_str(), -1, NULL, 0);
+
+            std::wstring wline;
+
+            if (size > 0)
+            {
+                wline.resize(size - 1);
+
+                MultiByteToWideChar(
+                    CP_UTF8, 0, line.c_str(), -1,
+                    wline.data(), size);
+            }
+            else
+            {
+                wline.assign(line.begin(), line.end());
+            }
+
+            LogMsg(L"[APK] " + wline);
+            lineNum++;
+
+            if (line.find("Success") != std::string::npos)
+                successMessage = true;
+        };
+
+    while (ReadFile(hRead, buffer, sizeof(buffer),
+        &bytesRead, NULL) && bytesRead > 0)
+    {
+        outputBuffer.append(buffer, bytesRead);
+
+        size_t newlinePos;
+
+        while ((newlinePos = outputBuffer.find('\n'))
+            != std::string::npos)
+        {
+            std::string line = outputBuffer.substr(0, newlinePos);
+
+            if (!line.empty() && line.back() == '\r')
+                line.pop_back();
+
+            LogOutputLine(line);
+
+            outputBuffer.erase(0, newlinePos + 1);
+        }
+    }
+
+    if (!outputBuffer.empty())
+        LogOutputLine(outputBuffer);
+
+    CloseHandle(hRead);
+
+    WaitForSingleObject(pi.hProcess, INFINITE);
+
+    DWORD exitCode = 1;
+
+    if (!GetExitCodeProcess(pi.hProcess, &exitCode))
+    {
+        LogMsg(L"[APK] ERROR: GetExitCodeProcess failed: " +
+            std::to_wstring(GetLastError()), true);
+    }
+
+    CloseHandle(pi.hProcess);
+
+    LogMsg(L"[APK] Installation process completed with exit code: " +
+        std::to_wstring(exitCode));
+
+    LogMsg(L"[APK] Lines of output received: " +
+        std::to_wstring(lineNum));
+
+    if (exitCode != 0)
+    {
+        LogMsg(L"[APK] ERROR: ADB installation failed", true);
+        return false;
+    }
+
+    LogMsg(L"[APK] Installation successful!");
+    return true;
+}
+
 
 // ---------------- DOWNLOAD (backend, unchanged) ----------------
 bool DownloadFile(const std::wstring& url, const std::wstring& out)
@@ -566,54 +1046,76 @@ void HandleClick(int x, int y)
 
     if (PtInRect(&rQuest, p))
         std::thread([] {
-        hplinkValue = L"Scanning";
-        vesselValue = L"Searching";
+        LogMsg(L"================== QUEST INSTALLATION START ==================");
+        LogMsg(L"[Quest] Scanning for connected Android devices...");
         SetStatus(L"Scanning for Martani vessels...");
 
         if (!IsAdbAvailable())
         {
-            hplinkValue = L"Disconnected";
+            LogMsg(L"[Quest] ERROR: ADB bridge not available", true);
             SetError(L"No vessel bridge detected.");
             SetStatus(L"Vessel deployment failed.");
+            LogMsg(L"================== QUEST INSTALLATION FAILED ==================");
             return;
         }
 
-        hplinkValue = L"Bridge Detected";
-        LogMsg(L"Martani signature detected.");
+        SetStatus(L"Device connection check...");
 
-        if (!CheckAdbPermission())
+        // Wait for user to connect device and enable USB debugging
+        if (!WaitForAdbDevice())
         {
+            LogMsg(L"[Quest] User cancelled device connection", true);
             SetError(L"The vessel rejected the Resonance handshake.");
-            SetStatus(L"Vessel deployment failed.");
+            SetStatus(L"Vessel deployment cancelled.");
+            LogMsg(L"================== QUEST INSTALLATION CANCELLED ==================");
             return;
         }
 
-        hplinkValue = L"Linked";
-        vesselValue = L"VISOR Vessel";
-        SetStatus(L"Synchronizing with Higher Property...");
-        LogMsg(L"Binding Resonance...");
-
-        if (!DownloadFile(questApp.url, questApp.output))
+        // Check for multiple devices and let user select
+        LogMsg(L"[Quest] Checking for multiple devices...");
+        if (!SelectDevice())
         {
+            LogMsg(L"[Quest] ERROR: Device selection failed", true);
+            SetError(L"Failed to select device.");
+            SetStatus(L"Vessel deployment failed.");
+            LogMsg(L"================== QUEST INSTALLATION FAILED ==================");
+            return;
+        }
+
+        LogMsg(L"[Quest] Device connected and authorized");
+        SetStatus(L"Synchronizing with Higher Property...");
+        LogMsg(L"[Quest] Beginning APK download...");
+
+        // Build the Quest APK path in temp folder
+        std::wstring questApkPath = adbTempFolder + L"Quest.apk";
+        LogMsg(L"[Quest] Destination: " + questApkPath);
+
+        if (!DownloadFile(questApp.url, questApkPath))
+        {
+            LogMsg(L"[Quest] ERROR: APK download failed", true);
             SetError(L"Synchronization with Higher Property failed.");
             SetStatus(L"Vessel deployment failed.");
+            LogMsg(L"================== QUEST INSTALLATION FAILED ==================");
             return;
         }
 
+        LogMsg(L"[Quest] APK downloaded successfully");
         SetStatus(L"Binding vessel to Resonance...");
-        LogMsg(L"Materializing Vessel...");
+        LogMsg(L"[Quest] Proceeding with APK installation...");
 
-        if (!InstallAPK(questApp.output))
+        if (!InstallAPK(questApkPath))
         {
+            LogMsg(L"[Quest] ERROR: APK installation failed", true);
             SetError(L"The selected vessel generated Dissonance.");
             SetStatus(L"Vessel deployment failed.");
+            LogMsg(L"================== QUEST INSTALLATION FAILED ==================");
             return;
         }
 
+        LogMsg(L"[Quest] Installation complete!");
+        LogMsg(L"================== QUEST INSTALLATION SUCCESS ==================");
         saveStateValue = L"Bound";
         resonanceValue = L"Stable";
-        LogMsg(L"Save State anchor established.");
-        LogMsg(L"Vessel synchronized.");
         SetStatus(L"Persistent Save State established.");
             }).detach();
 
@@ -636,6 +1138,11 @@ void HandleClick(int x, int y)
         ShellExecuteW(NULL, L"open",
             L".\\Windows\\Martani 360.exe",
             NULL, NULL, SW_SHOW);
+    }
+
+    if (PtInRect(&rCopyLog, p))
+    {
+        CopyLogToClipboard();
     }
 }
 
@@ -698,11 +1205,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
             if (flickerTimer == 0) flickerActive = false;
         }
 
-        // rare corrupted-transmission burst
-        if (g_rng() % 900 == 0)
-            TriggerAnomaly();
-
-        // recover resonance once the anomaly window passes, unless a real error is active
+        // recover resonance once any operation completes, unless a real error is active
         if (anomalyFlashUntilTick > 0 && tickCount > anomalyFlashUntilTick && errorText.empty())
         {
             resonanceValue = L"Stable";
@@ -761,7 +1264,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         SetTextColor(memDC, inAnomaly ? COL_RED : COL_GREEN);
         {
             RECT headerText = { rHeader.left + 15, rHeader.top + 6, rHeader.right - 15, rHeader.bottom - 6 };
-            std::wstring headerStr = L"HIGHER PROPERTY\nRESONANCE DISSONANCE\nSURVEY PROGRAM   |   Build 4.03";
+            std::wstring headerStr = L"HIGHER PROPERTY\nRESONANCE DISSONANCE\nSURVEY PROGRAM   |   Build 0.02";
             if (flickerActive)
             {
                 // chromatic-aberration style ghost duplicate
@@ -801,6 +1304,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         DrawButton(memDC, rQuest, L"Deploy VISOR Vessel", pulseColor);
         DrawButton(memDC, rWindows, L"Deploy GPU Vessel", pulseColor);
         DrawButton(memDC, rLaunch, windowsInstalled ? L"Resume Session" : L"Vessel Unavailable", pulseColor, windowsInstalled);
+        DrawButton(memDC, rCopyLog, L"Copy Log", COL_GREEN_FAINT);
 
         // -------- status / error line --------
         SelectObject(memDC, hFontSmall);
