@@ -14,3 +14,7 @@ Assets/Plugins/Android/AndroidManifest.xml.DISABLED.meta
 /.vs
 /build
 /Martani-360-Installer/RES_DIS_SRV_PRG/x64
+/obj
+/obj
+/.vscode
+/.vs
