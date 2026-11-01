@@ -17,6 +17,7 @@ MonoBehaviour:
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
+    AppIdVideo: 
     AppVersion: 
     UseNameServer: 1
     FixedRegion: 
@@ -36,14 +37,12 @@ MonoBehaviour:
   RpcList:
   - CantHearYou
   - ChangeColour
+  - HeresWhy
   - ClickRpc
   - DestroyRpc
-  - HeresWhy
   - DestroySpaceship
-  - EndRound
   - Fire
   - FireBullet
-  - OnHit
   - RespawnSpaceship
   - RPCRefreshPlayerValues
   - SetTagger

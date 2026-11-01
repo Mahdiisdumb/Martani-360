@@ -428,7 +428,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'ERR
 
-    Simulation: Terminated'
+    Simulation: Terminated
+
+    Please RLD til further Eval'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -494,7 +496,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -33.071404, w: 0}
+  m_margin: {x: 0, y: 0, z: -64.92149, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -697,7 +699,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 49ab71ea3a31a8243b14e3a4327edab7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 49ab71ea3a31a8243b14e3a4327edab7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -705,7 +707,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 49ab71ea3a31a8243b14e3a4327edab7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 639
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 49ab71ea3a31a8243b14e3a4327edab7, type: 3}
       propertyPath: m_LocalRotation.w

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9551acf1c804ca74eac5c27dab68def9
+guid: 463ba905b6eee9d46baf5017e43eb73a
 AudioImporter:
   externalObjects: {}
   serializedVersion: 6
@@ -24,6 +24,6 @@ AssetOrigin:
   serializedVersion: 1
   productId: 130518
   packageName: Photon Voice 2
-  packageVersion: 2.63
+  packageVersion: 2.64
   assetPath: Assets/Photon/PhotonVoice/Demos/Resources/music_zapsplat_atmospheric_tension.wav
-  uploadId: 868348
+  uploadId: 1012102

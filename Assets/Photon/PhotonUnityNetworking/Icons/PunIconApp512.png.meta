@@ -2,11 +2,11 @@ fileFormatVersion: 2
 guid: 7377013011b4c3348809ff574abe799e
 AssetOrigin:
   serializedVersion: 1
-  productId: 119922
-  packageName: PUN 2 - FREE
-  packageVersion: 2.56
+  productId: 130518
+  packageName: Photon Voice 2
+  packageVersion: 2.64
   assetPath: Assets/Photon/PhotonUnityNetworking/Icons/PunIconApp512.png
-  uploadId: 993206
+  uploadId: 1012102
 TextureImporter:
   internalIDToNameTable:
   - first:
